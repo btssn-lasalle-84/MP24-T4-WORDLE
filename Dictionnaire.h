@@ -12,7 +12,7 @@ class Dictionnaire
   public:
     Dictionnaire();
 
-    std::string getMotAleatoire();
+    std::string getMotAleatoire() const;
     bool        estMotValide(const std::string& mot); // TODO
 };
 

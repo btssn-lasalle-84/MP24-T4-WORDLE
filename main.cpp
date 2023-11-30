@@ -1,14 +1,10 @@
-#include "Partie.h"
-#include "Joueur.h"
+#include "Wordle.h"
 
 int main()
 {
-    Joueur joueur1;
+    Wordle wordle;
 
-    std::vector<Joueur> joueurs = { joueur1 };
-    Partie              partie(joueurs);
-
-    partie.demarrerPartie();
+    wordle.demarrerPartie();
 
     return 0;
 }

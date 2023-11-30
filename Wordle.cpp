@@ -1,18 +1,7 @@
 #include "Wordle.h"
 
-std::string Wordle::couleurToString(Couleur couleur)
+void Wordle::demarrerPartie()
 {
-    switch(couleur)
-    {
-        case Rouge:
-            return "Rouge";
-        case Vert:
-            return "Vert";
-        case Jaune:
-            return "Jaune";
-        default:
-            return "Inconnu";
-    }
 }
 
 const std::string& Wordle::getMotAdeviner() const
@@ -28,4 +17,19 @@ const std::string& Wordle::getMotEntre() const
 void Wordle::setMotEntre(const std::string& mot)
 {
     motEntre = mot;
+}
+
+std::string Wordle::couleurToString(Couleur couleur)
+{
+    switch(couleur)
+    {
+        case Rouge:
+            return "Rouge";
+        case Vert:
+            return "Vert";
+        case Jaune:
+            return "Jaune";
+        default:
+            return "Inconnu";
+    }
 }

@@ -1,22 +1,19 @@
 #include "Partie.h"
 #include <iostream>
 
-Partie::Partie(const std::vector<Joueur>& j) : joueurs(j)
+Partie::Partie()
 {
 }
 
-void Partie::demarrerPartie()
+void Partie::afficherAccueil()
 {
-    initialiserPartie();
-    afficherResultats();
-}
-
-void Partie::initialiserPartie()
-{
-    dictionnaire.getMotAleatoire();
+    std::cout << "Jeu du pendu" << std::endl;
 }
 
 void Partie::afficherMotAdeviner()
 {
-    std::cout << "Mot à deviner : " << wordle.getMotAdeviner() << std::endl;
+}
+
+void Partie::afficherResultats()
+{
 }
