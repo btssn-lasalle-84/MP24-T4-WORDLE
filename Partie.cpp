@@ -12,6 +12,7 @@ void Partie::afficherAccueil()
 
 void Partie::afficherMotAdeviner()
 {
+    std::cout << "Mot à deviner : " << jeuWordle.getMotAdeviner() << std::endl;
 }
 
 void Partie::afficherResultats()
