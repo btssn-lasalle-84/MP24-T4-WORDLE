@@ -18,11 +18,13 @@ class Wordle
         Jaune
     };
 
-    std::string couleurToString(Couleur couleur);
+    void demarrerPartie();
 
     const std::string& getMotAdeviner() const;
     const std::string& getMotEntre() const;
     void               setMotEntre(const std::string& mot);
+
+    std::string couleurToString(Couleur couleur);
 };
 
 #endif

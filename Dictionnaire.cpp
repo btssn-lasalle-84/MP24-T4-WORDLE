@@ -1,7 +1,5 @@
 #include "Dictionnaire.h"
-#include <iostream>
-
-using namespace std;
+#include <ctime>
 
 Dictionnaire::Dictionnaire()
 {
@@ -9,7 +7,7 @@ Dictionnaire::Dictionnaire()
     std::srand(static_cast<unsigned>(std::time(nullptr)));
 }
 
-std::string Dictionnaire::getMotAleatoire()
+std::string Dictionnaire::getMotAleatoire() const
 {
     int indiceAleatoire = std::rand() % listeMots.size();
     return listeMots[indiceAleatoire];
