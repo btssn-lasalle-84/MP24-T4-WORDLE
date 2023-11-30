@@ -3,9 +3,9 @@
 
 int main()
 {
-    Joueur joueur1("Joueur1");
+    Joueur joueur1;
 
-    std::vector<Joueur> joueurs = { joueur1, joueur2 };
+    std::vector<Joueur> joueurs = { joueur1 };
     Partie              partie(joueurs);
 
     partie.demarrerPartie();
