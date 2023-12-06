@@ -1,5 +1,5 @@
 TARGET = wordle.out # Nom de l'exécutable
-OBJETS = Dictionnaire.o  Joueur.o  main.o  Partie.o  Wordle.o
+OBJETS = Dictionnaire.o  Joueur.o  main.o  IHMPartie.o  Wordle.o
 CXX = g++ -c # Compilateur
 LD = g++ -o
 CXXFLAGS = -c -Wall # Options de compilation

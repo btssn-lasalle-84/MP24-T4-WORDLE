@@ -1,27 +1,28 @@
 #ifndef JOUEUR_H
 #define JOUEUR_H
 
-#include "Wordle.h"
-
 #include <vector>
 #include <string>
-#include <iostream>
+
+#define DEBUG_JOUEUR
+
+#define NB_ENTREES_MAX 6
 
 class Joueur
 {
   private:
+    std::string              nom;
     std::vector<std::string> motsProposes;
     int                      scoreActuel;
     int                      nbTentatives;
-    Wordle                   jeuWordle;
 
   public:
     Joueur();
-    int  score() const;
+    ~Joueur();
+
+    int  getScore() const;
     int  incrementerScore();
-    int  tentativesRestantes() const;
-    char entreeJoueur();
-    void afficherScore() const;
+    int  getTentativesRestantes() const;
     void reinitialiserJeu();
     void proposerMot(std::string motPropose);
 };

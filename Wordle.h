@@ -4,27 +4,41 @@
 #include "Dictionnaire.h"
 #include <string>
 
+#define DEBUG_WORDLE
+
+class Joueur;
+class IHMPartie;
+
 class Wordle
 {
   private:
-    std::string motADeviner;
-    std::string motEntre;
+    std::string  motADeviner;
+    std::string  motEntre;
+    Joueur*      joueur;
+    IHMPartie*   ihmPartie;
+    Dictionnaire dictionnaire;
+
+    void initialiserPartie();
+    bool estMotCorrect() const;
+    bool estLettreCorrecte(char lettre, int position) const;
 
   public:
     enum Couleur
     {
-        Rouge,
+        Rouge = 0,
         Vert,
         Jaune
     };
 
-    void demarrerPartie();
+    Wordle();
+    ~Wordle();
 
-    const std::string& getMotAdeviner() const;
+    void               demarrerPartie();
+    const std::string& getMotADeviner() const;
     const std::string& getMotEntre() const;
-    void               setMotEntre(const std::string& mot);
+    bool               setMotEntre(const std::string& mot);
 
-    std::string couleurToString(Couleur couleur);
+    std::string convertirCouleurEnString(Couleur couleur);
 };
 
 #endif

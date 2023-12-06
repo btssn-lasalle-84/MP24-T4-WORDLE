@@ -3,26 +3,39 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
+#define INCREMENTATION_SCORE 1;
 
-#define NB_ENTREES_MAX 6
+using namespace std;
 
 Joueur::Joueur() : scoreActuel(0), nbTentatives(0)
 {
+#ifdef DEBUG_JOUEUR
+    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
+              << "scoreActuel = " << scoreActuel << " | nbTentatives = " << nbTentatives
+              << std::endl;
+#endif
 }
 
-int Joueur::score() const
+Joueur::~Joueur()
+{
+#ifdef DEBUG_JOUEUR
+    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
+              << std::endl;
+#endif
+}
+
+int Joueur::getScore() const
 {
     return scoreActuel;
 }
 
 int Joueur::incrementerScore()
 {
-    scoreActuel += 2;
+    scoreActuel += INCREMENTATION_SCORE;
     return scoreActuel;
 }
 
-int Joueur::tentativesRestantes() const
+int Joueur::getTentativesRestantes() const
 {
     if(nbTentatives < NB_ENTREES_MAX)
     {
@@ -32,20 +45,6 @@ int Joueur::tentativesRestantes() const
     {
         return 0;
     }
-}
-
-char Joueur::entreeJoueur()
-{
-    char entree;
-    cout << "Veuillez entrer une lettre : ";
-    cin >> entree;
-
-    return entree;
-}
-
-void Joueur::afficherScore() const
-{
-    cout << "Score : " << score() << endl;
 }
 
 void Joueur::reinitialiserJeu()
@@ -59,4 +58,3 @@ void Joueur::proposerMot(std::string motPropose)
 {
     motsProposes.push_back(motPropose);
 }
-
