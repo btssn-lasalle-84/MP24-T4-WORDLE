@@ -5,7 +5,7 @@ using namespace std;
 
 Dictionnaire::Dictionnaire()
 {
-    listeMots = { "chat", "chien", "oiseau", "maison", "ordinateur" };
+    listeMots = { "samba", "chien", "stylo" };
     std::srand(static_cast<unsigned>(time(nullptr)));
 }
 

@@ -6,7 +6,9 @@
 
 #define DEBUG_JOUEUR
 
-#define NB_ENTREES_MAX 6
+#define INCREMENTATION_SCORE      1
+#define INCREMENTATION_TENTATIVES 1
+#define NB_TENTATIVES_MAX         6
 
 class Joueur
 {
@@ -14,17 +16,18 @@ class Joueur
     std::string              nom;
     std::vector<std::string> motsProposes;
     int                      scoreActuel;
-    static int               nbTentatives;
+    int                      nbTentatives;
 
   public:
     Joueur();
     ~Joueur();
-    static int incrementerTentatives();
-    int        getScore() const;
-    int        incrementerScore();
-    int        getTentativesRestantes() const;
-    void       reinitialiserJeu();
-    void       proposerMot(std::string motPropose);
+    int  incrementerTentatives();
+    int  getScore() const;
+    int  incrementerScore();
+    int  getTentativesRestantes() const;
+    int  getTentativesMax() const;
+    void reinitialiserJeu();
+    void proposerMot(const std::string& motPropose);
 };
 
 #endif // JOUEUR_H

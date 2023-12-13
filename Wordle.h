@@ -4,6 +4,8 @@
 #include "Dictionnaire.h"
 #include <string>
 
+#define TAILLE_MAX_MOT 5
+
 #define DEBUG_WORDLE
 
 class Joueur;
