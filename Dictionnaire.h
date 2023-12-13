@@ -15,8 +15,6 @@ class Dictionnaire
     Dictionnaire();
 
     std::string getMotAleatoire() const;
-    bool        estMotValable(const std::string& mot) const;
-    bool        estMotDejaPropose(const std::string& mot) const;
 };
 
 #endif

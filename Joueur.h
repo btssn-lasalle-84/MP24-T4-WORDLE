@@ -14,17 +14,17 @@ class Joueur
     std::string              nom;
     std::vector<std::string> motsProposes;
     int                      scoreActuel;
-    int                      nbTentatives;
+    static int               nbTentatives;
 
   public:
     Joueur();
     ~Joueur();
-
-    int  getScore() const;
-    int  incrementerScore();
-    int  getTentativesRestantes() const;
-    void reinitialiserJeu();
-    void proposerMot(std::string motPropose);
+    static int incrementerTentatives();
+    int        getScore() const;
+    int        incrementerScore();
+    int        getTentativesRestantes() const;
+    void       reinitialiserJeu();
+    void       proposerMot(std::string motPropose);
 };
 
 #endif // JOUEUR_H

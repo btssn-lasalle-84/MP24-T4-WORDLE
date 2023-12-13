@@ -14,13 +14,3 @@ std::string Dictionnaire::getMotAleatoire() const
     int indiceAleatoire = std::rand() % listeMots.size();
     return listeMots[indiceAleatoire];
 }
-
-bool Dictionnaire::estMotValable(const std::string& mot) const
-{
-    return false;
-}
-
-bool Dictionnaire::estMotDejaPropose(const std::string& mot) const
-{
-    return false;
-}

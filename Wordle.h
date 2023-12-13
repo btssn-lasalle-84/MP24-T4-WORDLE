@@ -36,7 +36,7 @@ class Wordle
     void               demarrerPartie();
     const std::string& getMotADeviner() const;
     const std::string& getMotEntre() const;
-    bool               setMotEntre(const std::string& mot);
+    bool               setMotEntre(const std::string& motSaisi);
 
     std::string convertirCouleurEnString(Couleur couleur);
 };
