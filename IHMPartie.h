@@ -13,11 +13,11 @@ class IHMPartie
   public:
     IHMPartie(Wordle* wordle = nullptr);
 
-    static void afficherAccueil();
-    void afficherMotAdeviner();
-    void afficherResultats();
-    void afficherScore() const;
-    static std::string saisirMot();
+    void        afficherAccueil();
+    void        afficherMotAdeviner();
+    void        afficherResultats();
+    void        afficherScore() const;
+    std::string saisirMot();
 };
 
 #endif // IHMPARTIE_H

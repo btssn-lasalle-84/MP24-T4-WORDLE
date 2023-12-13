@@ -2,8 +2,6 @@
 #include "Joueur.h"
 #include "IHMPartie.h"
 
-#define TAILLE_MAX_MOT 5
-
 #ifdef DEBUG_WORDLE
 #include <iostream>
 #endif
@@ -29,17 +27,31 @@ Wordle::~Wordle()
 void Wordle::demarrerPartie()
 {
     initialiserPartie();
-    IHMPartie::afficherAccueil();
-    std::string motSaisi = IHMPartie::saisirMot();
+    ihmPartie->afficherAccueil();
 
-    if(setMotEntre(motSaisi))
+    for(int i = 0; i < joueur->getTentativesMax(); ++i)
     {
-        std::cout << "Mot saisi avec succès !" << std::endl;
-        Joueur::incrementerTentatives();
-    }
-    else
-    {
-        std::cerr << "Erreur : Mot saisi non valide." << std::endl;
+        std::string motSaisi = ihmPartie->saisirMot();
+
+        if(setMotEntre(motSaisi))
+        {
+            joueur->incrementerTentatives();
+            joueur->proposerMot(motSaisi);
+
+            if(estMotCorrect())
+            {
+#ifdef DEBUG_WORDLE
+                std::cout << "Félicitations ! Vous avez deviné le mot." << std::endl;
+#endif
+                break;
+            }
+            else
+            {
+            }
+        }
+        else
+        {
+        }
     }
 }
 
@@ -57,7 +69,9 @@ bool Wordle::setMotEntre(const std::string& motSaisi)
 {
     if(motSaisi.size() != TAILLE_MAX_MOT)
     {
+#ifdef DEBUG_WORDLE
         std::cerr << "Erreur : La taille du mot n'est pas conforme." << std::endl;
+#endif
         return false; // @fixme Utiliser des codes d'erreur
     }
 
