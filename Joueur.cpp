@@ -3,11 +3,12 @@
 #include <string>
 #include <iostream>
 
-#define INCREMENTATION_SCORE 1;
+#define INCREMENTATION_SCORE      1;
+#define INCREMENTATION_TENTATIVES 1;
 
 using namespace std;
 
-Joueur::Joueur() : scoreActuel(0), nbTentatives(0)
+Joueur::Joueur() : scoreActuel(0)
 {
 #ifdef DEBUG_JOUEUR
     std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
@@ -15,6 +16,8 @@ Joueur::Joueur() : scoreActuel(0), nbTentatives(0)
               << std::endl;
 #endif
 }
+
+int Joueur::nbTentatives = 0;
 
 Joueur::~Joueur()
 {
@@ -35,6 +38,11 @@ int Joueur::incrementerScore()
     return scoreActuel;
 }
 
+int Joueur::incrementerTentatives()
+{
+    nbTentatives += INCREMENTATION_TENTATIVES;
+    return nbTentatives;
+}
 int Joueur::getTentativesRestantes() const
 {
     if(nbTentatives < NB_ENTREES_MAX)

@@ -30,7 +30,17 @@ void Wordle::demarrerPartie()
 {
     initialiserPartie();
     IHMPartie::afficherAccueil();
-    IHMPartie::saisirMot();
+    std::string motSaisi = IHMPartie::saisirMot();
+
+    if(setMotEntre(motSaisi))
+    {
+        std::cout << "Mot saisi avec succès !" << std::endl;
+        Joueur::incrementerTentatives();
+    }
+    else
+    {
+        std::cerr << "Erreur : Mot saisi non valide." << std::endl;
+    }
 }
 
 const std::string& Wordle::getMotADeviner() const
@@ -43,22 +53,15 @@ const std::string& Wordle::getMotEntre() const
     return motEntre;
 }
 
-bool Wordle::setMotEntre(const std::string& mot)
+bool Wordle::setMotEntre(const std::string& motSaisi)
 {
-    if(!dictionnaire.estMotValable(mot))
+    if(motSaisi.size() != TAILLE_MAX_MOT)
     {
-        return false; // @fixme Utiliser des codes d'erreur de retour
-    }
-    if(mot.size() != TAILLE_MAX_MOT)
-    {
-        return false; // @fixme Utiliser des codes d'erreur
-    }
-    if(!dictionnaire.estMotDejaPropose(mot))
-    {
+        std::cerr << "Erreur : La taille du mot n'est pas conforme." << std::endl;
         return false; // @fixme Utiliser des codes d'erreur
     }
 
-    motEntre = mot;
+    motEntre = motSaisi;
 
     return true;
 }
