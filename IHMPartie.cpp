@@ -1,6 +1,7 @@
 #include "IHMPartie.h"
 #include "Wordle.h"
 #include <iostream>
+using namespace std;
 
 IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 {
@@ -12,7 +13,7 @@ IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 
 void IHMPartie::afficherAccueil()
 {
-    std::cout << "Jeu du pendu" << std::endl;
+    std::cout << "WORDLE" << std::endl;
 }
 
 void IHMPartie::afficherMotAdeviner()
@@ -28,12 +29,12 @@ void IHMPartie::afficherScore() const
 {
 }
 
-char IHMPartie::saisirLettre()
+string IHMPartie::saisirMot()
 {
-    char entree;
+    string entree;
 
-    std::cout << "Veuillez entrer une lettre : ";
-    std::cin >> entree;
+    cout << "Veuillez entrer un mot : ";
+    cin >> entree;
 
     return entree;
 }

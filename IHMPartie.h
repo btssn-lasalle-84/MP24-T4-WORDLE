@@ -1,6 +1,6 @@
 #ifndef IHMPARTIE_H
 #define IHMPARTIE_H
-
+#include <iostream>
 #define DEBUG_IHMPARTIE
 
 class Wordle;
@@ -13,11 +13,11 @@ class IHMPartie
   public:
     IHMPartie(Wordle* wordle = nullptr);
 
-    void afficherAccueil();
+    static void afficherAccueil();
     void afficherMotAdeviner();
     void afficherResultats();
     void afficherScore() const;
-    char saisirLettre();
+    static std::string saisirMot();
 };
 
 #endif // IHMPARTIE_H

@@ -29,6 +29,8 @@ Wordle::~Wordle()
 void Wordle::demarrerPartie()
 {
     initialiserPartie();
+    IHMPartie::afficherAccueil();
+    IHMPartie::saisirMot();
 }
 
 const std::string& Wordle::getMotADeviner() const
