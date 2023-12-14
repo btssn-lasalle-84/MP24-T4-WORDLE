@@ -29,14 +29,26 @@ void Wordle::demarrerPartie()
     initialiserPartie();
     ihmPartie->afficherAccueil();
 
-    for(int i = 0; i < joueur->getTentativesMax(); ++i)
+    int tentative = INCREMENTATION_TENTATIVES;
+    while(tentative <= NB_TENTATIVES_MAX)
     {
         std::string motSaisi = ihmPartie->saisirMot();
+    if (motSaisi.size() != TAILLE_MAX_MOT)
+    {
+        std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT << " lettres." << std::endl;
+        continue;
+    }
+        if(motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
+        {
+            std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
+            continue;
+        }
 
         if(setMotEntre(motSaisi))
         {
-            joueur->incrementerTentatives();
+            motsDejaSaisis.insert(motSaisi);
             joueur->proposerMot(motSaisi);
+            joueur->incrementerTentatives();
 
             if(estMotCorrect())
             {
@@ -45,13 +57,11 @@ void Wordle::demarrerPartie()
 #endif
                 break;
             }
-            else
-            {
-            }
         }
         else
         {
         }
+        ++tentative;
     }
 }
 

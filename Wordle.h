@@ -3,6 +3,7 @@
 
 #include "Dictionnaire.h"
 #include <string>
+#include <set>
 
 #define TAILLE_MAX_MOT 5
 
@@ -19,6 +20,8 @@ class Wordle
     Joueur*      joueur;
     IHMPartie*   ihmPartie;
     Dictionnaire dictionnaire;
+
+    std::set<std::string> motsDejaSaisis;
 
     void initialiserPartie();
     bool estMotCorrect() const;
