@@ -3,6 +3,7 @@
 
 #include "Dictionnaire.h"
 #include <string>
+#include <vector>
 
 #define TAILLE_MAX_MOT 5
 
@@ -13,34 +14,41 @@ class IHMPartie;
 
 class Wordle
 {
+  public:
+    enum EtatAnalyse // Couleur
+    {
+        // VERT : la lettre est dans le mot et au bon endroit (BIEN_PLACE)
+        // JAUNE : la lettre est dans le mot mais au mauvais endroit (MAL_PLACE)
+        // ROUGE : (facultatif) : la lettre n’est dans le mot à aucun endroit (ABSENTE)
+        ABSENTE_ROUGE = 0,
+        BIEN_PLACE_VERT,
+        MAL_PLACE_JAUNE
+    };
+
   private:
-    std::string  motADeviner;
-    std::string  motEntre;
-    Joueur*      joueur;
-    IHMPartie*   ihmPartie;
-    Dictionnaire dictionnaire;
+    std::string              motADeviner;
+    std::string              motEntre;
+    Joueur*                  joueur;
+    IHMPartie*               ihmPartie;
+    Dictionnaire             dictionnaire;
+    std::vector<EtatAnalyse> analyseMot;
 
     void initialiserPartie();
     bool estMotCorrect() const;
     bool estLettreCorrecte(char lettre, int position) const;
 
   public:
-    enum Couleur
-    {
-        Rouge = 0,
-        Vert,
-        Jaune
-    };
-
     Wordle();
     ~Wordle();
 
     void               demarrerPartie();
+    void               analyserMot();
     const std::string& getMotADeviner() const;
     const std::string& getMotEntre() const;
     bool               setMotEntre(const std::string& motSaisi);
 
-    std::string convertirCouleurEnString(Couleur couleur);
+    std::string convertirCouleurEnString(EtatAnalyse etat);
+    std::string convertirEtatEnString(EtatAnalyse etat);
 };
 
 #endif
