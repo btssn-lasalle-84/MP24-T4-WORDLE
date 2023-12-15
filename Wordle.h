@@ -49,9 +49,7 @@ class Wordle
     const std::string& getMotADeviner() const;
     const std::string& getMotEntre() const;
     bool               setMotEntre(const std::string& motSaisi);
-
-    std::string convertirCouleurEnString(EtatAnalyse etat);
-    std::string convertirEtatEnString(EtatAnalyse etat);
+    std::string        mettreLettreEnCouleurSelonEtat() const;
 };
 
 #endif
