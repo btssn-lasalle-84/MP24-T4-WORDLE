@@ -6,7 +6,9 @@
 #include <iostream>
 #endif
 
-Wordle::Wordle() : joueur(new Joueur), ihmPartie(new IHMPartie(this))
+Wordle::Wordle() :
+    joueur(new Joueur), ihmPartie(new IHMPartie(this)),
+    analyseMot(TAILLE_MAX_MOT, EtatAnalyse::ABSENTE_ROUGE)
 {
 #ifdef DEBUG_WORDLE
     std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
@@ -46,6 +48,7 @@ void Wordle::demarrerPartie()
 
         if(setMotEntre(motSaisi))
         {
+            analyserMot();
             motsDejaSaisis.insert(motSaisi);
             joueur->proposerMot(motSaisi);
             joueur->incrementerTentatives();
@@ -63,6 +66,55 @@ void Wordle::demarrerPartie()
         }
         ++tentative;
     }
+}
+
+void Wordle::analyserMot()
+{
+    if(motADeviner.size() != motEntre.size() || motADeviner.size() != TAILLE_MAX_MOT)
+    {
+#ifdef DEBUG_WORDLE
+        std::cerr << "Erreur : problème de taille !" << std::endl;
+#endif
+        return;
+    }
+
+#ifdef DEBUG_WORDLE
+    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
+              << "motADeviner = " << motADeviner << " - motEntre = " << motEntre << std::endl;
+#endif
+
+    // Recherche des lettres présentes dans le mot au bon endroit (BIEN_PLACE)
+    for(size_t i = 0; i < motADeviner.size(); ++i)
+    {
+        if(motADeviner[i] == motEntre[i] && analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
+        {
+            analyseMot[i] = EtatAnalyse::BIEN_PLACE_VERT;
+        }
+    }
+
+    // Recherche des lettres présentes dans le mot mais au mauvais endroit (MAL_PLACE)
+    for(size_t i = 0; i < motEntre.size(); ++i)
+    {
+        if(analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
+        {
+            for(size_t j = 0; j < motADeviner.size(); ++j)
+            {
+                if(i != j && motEntre[i] == motADeviner[j])
+                {
+                    analyseMot[i] = EtatAnalyse::MAL_PLACE_JAUNE;
+                    break;
+                }
+            }
+        }
+    }
+
+#ifdef DEBUG_WORDLE
+    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
+              << "analyseMot = " << std::endl;
+    for(size_t i = 0; i < analyseMot.size(); ++i)
+        std::cout << analyseMot[i] << " ";
+    std::cout << std::endl;
+#endif
 }
 
 const std::string& Wordle::getMotADeviner() const
@@ -105,16 +157,31 @@ bool Wordle::estLettreCorrecte(char lettre, int position) const
     return motADeviner[position] == lettre;
 }
 
-std::string Wordle::convertirCouleurEnString(Couleur couleur)
+std::string Wordle::convertirCouleurEnString(EtatAnalyse etat)
 {
-    switch(couleur)
+    switch(etat)
     {
-        case Rouge:
+        case EtatAnalyse::ABSENTE_ROUGE:
             return "Rouge";
-        case Vert:
+        case EtatAnalyse::BIEN_PLACE_VERT:
             return "Vert";
-        case Jaune:
+        case EtatAnalyse::MAL_PLACE_JAUNE:
             return "Jaune";
+        default:
+            return "Inconnu";
+    }
+}
+
+std::string Wordle::convertirEtatEnString(EtatAnalyse etat)
+{
+    switch(etat)
+    {
+        case EtatAnalyse::ABSENTE_ROUGE:
+            return "Absente";
+        case EtatAnalyse::BIEN_PLACE_VERT:
+            return "Bien placée";
+        case EtatAnalyse::MAL_PLACE_JAUNE:
+            return "Mal placée";
         default:
             return "Inconnu";
     }
