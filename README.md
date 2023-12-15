@@ -1,14 +1,5 @@
 [![C/C++ make](https://github.com/btssn-lasalle-84/MP24-T4-WORDLE/actions/workflows/c-cpp.yml/badge.svg?branch=develop)](https://github.com/btssn-lasalle-84/MP24-T4-WORDLE/actions/workflows/c-cpp.yml)[![C/C++ format](https://github.com/btssn-lasalle-84/MP24-T4-WORDLE/actions/workflows/cppformat.yml/badge.svg?branch=develop)](https://github.com/btssn-lasalle-84/MP24-T4-WORDLE/actions/workflows/cppformat.yml)
 
-# Mini-projet : WORDLE
-
-## Présentation
-
-## Auteurs
-
----
-©️ BTS SNIR LaSalle Avignon 2024
-
 # Mini-Projet WORDLE
 
 ## Informations
@@ -18,11 +9,9 @@
 - Numéro de version du logiciel : 1.79.2
 - Date de cette version du logiciel : Mai 2023
 
-## Présentation + Objectifs
+## Présentation
 
-Le but du jeu est de deviner un mot spécifique de cinq lettres en un maximum de six tentatives, en
-tapant des lettres sur un écran de six lignes de cinq cases chacune. Chaque lettre devinée à sa bonne
-place apparaît en vert, une bonne lettre mal placée en jaune.
+Le but du jeu est de deviner un mot spécifique de cinq lettres en un maximum de six tentatives, en tapant des lettres sur un écran de six lignes de cinq cases chacune. Chaque lettre devinée à sa bonne place apparaît en vert, une bonne lettre mal placée en jaune.
 
 ## Utilisation
 
@@ -30,7 +19,11 @@ Exemple :
 
 ```bash
 $ make
-g++ -c IHMPartie.cpp
+g++ -c   Dictionnaire.cpp
+g++ -c   Joueur.cpp
+g++ -c   main.cpp
+g++ -c   IHMPartie.cpp
+g++ -c   Wordle.cpp
 g++ -o wordle.out Dictionnaire.o Joueur.o main.o IHMPartie.o Wordle.o
 
 $ ./wordle.out
@@ -38,7 +31,7 @@ $ ./wordle.out
 
 ## Ce que le logiciel fait dans cette version
 
-> Facultatif : gif animé
+![](images/wordle.gif)
 
 ## TODO
 
@@ -50,11 +43,12 @@ $ ./wordle.out
 
 ## Diagramme de classes
 
-> Fourni par l'enseignant
+![](images/diagramme-classes-1.0.png)
 
 ## Équipe de développement
 
-- Thomas Vignal thomasvignal.btssn@gmail.com
-- Othman Latyaoui othmanlatyaoui.pro@gmail.com
+- Thomas Vignal <<thomasvignal.btssn@gmail.com>>
+- Othman Latyaoui <<othmanlatyaoui.pro@gmail.com>>
 
 ---
+©️ BTS SNIR LaSalle Avignon 2024
