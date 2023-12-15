@@ -35,11 +35,12 @@ void Wordle::demarrerPartie()
     while(tentative <= NB_TENTATIVES_MAX)
     {
         std::string motSaisi = ihmPartie->saisirMot();
-    if (motSaisi.size() != TAILLE_MAX_MOT)
-    {
-        std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT << " lettres." << std::endl;
-        continue;
-    }
+        if(motSaisi.size() != TAILLE_MAX_MOT)
+        {
+            std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
+                      << " lettres." << std::endl;
+            continue;
+        }
         if(motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
         {
             std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
@@ -82,7 +83,22 @@ void Wordle::analyserMot()
     std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
               << "motADeviner = " << motADeviner << " - motEntre = " << motEntre << std::endl;
 #endif
-
+    // Mise des états 2 à 0 dans le vecteur analyseMot
+    for(size_t i = 0; i < motADeviner.size(); ++i)
+    {
+        if(analyseMot[i] == EtatAnalyse::MAL_PLACE_JAUNE)
+        {
+            analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
+        }
+    }
+    // Mise des états 1 à 0 dans le vecteur analyseMot
+    for(size_t i = 0; i < motADeviner.size(); ++i)
+    {
+        if(analyseMot[i] == EtatAnalyse::BIEN_PLACE_VERT)
+        {
+            analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
+        }
+    }
     // Recherche des lettres présentes dans le mot au bon endroit (BIEN_PLACE)
     for(size_t i = 0; i < motADeviner.size(); ++i)
     {
