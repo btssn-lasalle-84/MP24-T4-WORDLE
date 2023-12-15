@@ -21,9 +21,9 @@ class Joueur
   public:
     Joueur();
     ~Joueur();
-    int  incrementerTentatives();
     int  getScore() const;
     int  incrementerScore();
+    int  incrementerTentatives();
     int  getTentativesRestantes() const;
     int  getTentativesMax() const;
     void reinitialiserJeu();

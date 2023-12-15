@@ -7,19 +7,10 @@ using namespace std;
 
 Joueur::Joueur() : scoreActuel(0), nbTentatives(0)
 {
-#ifdef DEBUG_JOUEUR
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << "scoreActuel = " << scoreActuel << " | nbTentatives = " << nbTentatives
-              << std::endl;
-#endif
 }
 
 Joueur::~Joueur()
 {
-#ifdef DEBUG_JOUEUR
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << std::endl;
-#endif
 }
 
 int Joueur::getScore() const
@@ -67,8 +58,7 @@ void Joueur::proposerMot(const std::string& motPropose)
 {
     motsProposes.push_back(motPropose);
 #ifdef DEBUG_JOUEUR
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << "nbMotsProposes = " << motsProposes.size() << " - motsProposes = ";
+    std::cout << "Nombre de mots proposés = " << motsProposes.size() << " - Mots Proposés = ";
     for(int i = 0; i < motsProposes.size(); ++i)
         std::cout << motsProposes[i] << " ";
     std::cout << std::endl;

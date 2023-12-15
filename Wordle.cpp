@@ -10,26 +10,18 @@ Wordle::Wordle() :
     joueur(new Joueur), ihmPartie(new IHMPartie(this)),
     analyseMot(TAILLE_MAX_MOT, EtatAnalyse::ABSENTE_ROUGE)
 {
-#ifdef DEBUG_WORDLE
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << "joueur = " << joueur << std::endl;
-#endif
 }
 
 Wordle::~Wordle()
 {
     delete joueur;
     delete ihmPartie;
-#ifdef DEBUG_WORDLE
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << std::endl;
-#endif
 }
 
 void Wordle::demarrerPartie()
 {
     initialiserPartie();
-    ihmPartie->afficherAccueil();
+    ihmPartie->afficherNomWordle();
 
     int tentative = INCREMENTATION_TENTATIVES;
     while(tentative <= NB_TENTATIVES_MAX)
@@ -53,7 +45,7 @@ void Wordle::demarrerPartie()
             motsDejaSaisis.insert(motSaisi);
             joueur->proposerMot(motSaisi);
             joueur->incrementerTentatives();
-
+            ihmPartie->afficherLettreEnCouleurSelonEtat();
             if(estMotCorrect())
             {
 #ifdef DEBUG_WORDLE
@@ -79,10 +71,6 @@ void Wordle::analyserMot()
         return;
     }
 
-#ifdef DEBUG_WORDLE
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << "motADeviner = " << motADeviner << " - motEntre = " << motEntre << std::endl;
-#endif
     // Mise des états 2 à 0 dans le vecteur analyseMot
     for(size_t i = 0; i < motADeviner.size(); ++i)
     {
@@ -123,14 +111,6 @@ void Wordle::analyserMot()
             }
         }
     }
-
-#ifdef DEBUG_WORDLE
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << "analyseMot = " << std::endl;
-    for(size_t i = 0; i < analyseMot.size(); ++i)
-        std::cout << analyseMot[i] << " ";
-    std::cout << std::endl;
-#endif
 }
 
 const std::string& Wordle::getMotADeviner() const
@@ -173,32 +153,31 @@ bool Wordle::estLettreCorrecte(char lettre, int position) const
     return motADeviner[position] == lettre;
 }
 
-std::string Wordle::convertirCouleurEnString(EtatAnalyse etat)
+std::string Wordle::mettreLettreEnCouleurSelonEtat() const
 {
-    switch(etat)
-    {
-        case EtatAnalyse::ABSENTE_ROUGE:
-            return "Rouge";
-        case EtatAnalyse::BIEN_PLACE_VERT:
-            return "Vert";
-        case EtatAnalyse::MAL_PLACE_JAUNE:
-            return "Jaune";
-        default:
-            return "Inconnu";
-    }
-}
+    std::string resultat;
 
-std::string Wordle::convertirEtatEnString(EtatAnalyse etat)
-{
-    switch(etat)
+    for(size_t i = 0; i < motEntre.size(); ++i)
     {
-        case EtatAnalyse::ABSENTE_ROUGE:
-            return "Absente";
-        case EtatAnalyse::BIEN_PLACE_VERT:
-            return "Bien placée";
-        case EtatAnalyse::MAL_PLACE_JAUNE:
-            return "Mal placée";
-        default:
-            return "Inconnu";
+        char        lettre = motEntre[i];
+        EtatAnalyse etat   = analyseMot[i];
+
+        switch(etat)
+        {
+            case EtatAnalyse::ABSENTE_ROUGE:
+                resultat += "\033[31m" + std::string(1, lettre) + "\033[0m"; // Rouge
+                break;
+            case EtatAnalyse::BIEN_PLACE_VERT:
+                resultat += "\033[32m" + std::string(1, lettre) + "\033[0m"; // Vert
+                break;
+            case EtatAnalyse::MAL_PLACE_JAUNE:
+                resultat += "\033[33m" + std::string(1, lettre) + "\033[0m"; // Jaune
+                break;
+            default:
+                resultat += std::string(1, lettre);
+                break;
+        }
     }
+
+    return resultat;
 }

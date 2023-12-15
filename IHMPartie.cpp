@@ -5,15 +5,6 @@ using namespace std;
 
 IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 {
-#ifdef DEBUG_IHMPARTIE
-    std::cout << "[" << __FILE__ << ":" << __LINE__ << ":" << __PRETTY_FUNCTION__ << "] "
-              << "wordle = " << wordle << " | jeuWordle = " << jeuWordle << std::endl;
-#endif
-}
-
-void IHMPartie::afficherAccueil()
-{
-    std::cout << "WORDLE" << std::endl;
 }
 
 void IHMPartie::afficherMotAdeviner()
@@ -21,8 +12,9 @@ void IHMPartie::afficherMotAdeviner()
     std::cout << "Mot à deviner : " << jeuWordle->getMotADeviner() << std::endl;
 }
 
-void IHMPartie::afficherResultats()
+void IHMPartie::afficherLettreEnCouleurSelonEtat() const
 {
+    std::cout << "Mot entré : " << jeuWordle->mettreLettreEnCouleurSelonEtat() << std::endl;
 }
 
 void IHMPartie::afficherScore() const
@@ -37,4 +29,20 @@ string IHMPartie::saisirMot()
     cin >> entree;
 
     return entree;
+}
+
+void IHMPartie::afficherNomWordle() const
+{
+    cout << R"(
+
+  █████   ███   █████    ███████    ███████████   ██████████   █████       ██████████
+ ░░███   ░███  ░░███   ███░░░░░███ ░░███░░░░░███ ░░███░░░░███ ░░███       ░░███░░░░░█
+  ░███   ░███   ░███  ███     ░░███ ░███    ░███  ░███   ░░███ ░███        ░███  █ ░
+  ░███   ░███   ░███ ░███      ░███ ░██████████   ░███    ░███ ░███        ░██████
+  ░░███  █████  ███  ░███      ░███ ░███░░░░░███  ░███    ░███ ░███        ░███░░█
+   ░░░█████░█████░   ░░███     ███  ░███    ░███  ░███    ███  ░███      █ ░███ ░   █
+     ░░███ ░░███      ░░░███████░   █████   █████ ██████████   ███████████ ██████████
+      ░░░   ░░░         ░░░░░░░    ░░░░░   ░░░░░ ░░░░░░░░░░   ░░░░░░░░░░░ ░░░░░░░░░░
+)"
+        << endl;
 }
