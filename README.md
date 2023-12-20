@@ -64,11 +64,11 @@ Si le joueur ne devine pas le mot au bout de 6 tentatives, il n'y a pas de messa
 
 ## Itérations
 
-![Alt text](image.png)
+![Alt text](images/image.png)
 
 ## Diagramme de classes
 
-![Alt text] images/wordle.gif
+![Alt text](images/wordle.gif)
 
 ## Équipe de développement
 
