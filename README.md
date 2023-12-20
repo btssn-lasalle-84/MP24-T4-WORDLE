@@ -42,7 +42,7 @@ Le logiciel dans la version 1.0 propose au joueur de trouver un mot de 5 lettres
 
 Lorsque le joueur a deviné le mot, le jeu affiche "Félicitations ! Vous avez deviné le mot."
 
-![Alt text](<Capture d’écran vidéo de 15-12-2023 11 18 09.gif>)
+![Alt text](images/wordle.gif)
 
 ## TODO
 
@@ -64,11 +64,11 @@ Si le joueur ne devine pas le mot au bout de 6 tentatives, il n'y a pas de messa
 
 ## Itérations
 
-![Alt text](images/image.png)
+![Alt text](image.png)
 
 ## Diagramme de classes
 
-![Alt text](images/wordle.gif)
+![Alt text](images/diagramme-classes-1.0.png)
 
 ## Équipe de développement
 
