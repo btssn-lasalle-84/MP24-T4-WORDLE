@@ -46,3 +46,9 @@ void IHMPartie::afficherNomWordle() const
 )"
         << endl;
 }
+
+void IHMPartie::nbTentativesAtteint() const
+{
+    std::cout << "Perdu ! Vous n'avez pas trouvé le mot."
+              << " Le mot à trouver était : " << jeuWordle->getMotADeviner() << std::endl;
+}
