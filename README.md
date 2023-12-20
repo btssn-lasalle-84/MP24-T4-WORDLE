@@ -68,7 +68,7 @@ Si le joueur ne devine pas le mot au bout de 6 tentatives, il n'y a pas de messa
 
 ## Diagramme de classes
 
-> Fourni par l'enseignant
+![Alt text] images/wordle.gif
 
 ## Équipe de développement
 
