@@ -62,9 +62,8 @@ void Wordle::demarrerPartie()
         {
         }
         ++tentative;
-    }
+    } ihmPartie->nbTentativesAtteint();
     } while (ihmPartie->demanderContinuerPartie());
-    ihmPartie->nbTentativesAtteint();
 }
 
 void Wordle::analyserMot()
