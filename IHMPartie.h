@@ -18,6 +18,7 @@ class IHMPartie
     void        afficherScore() const;
     std::string saisirMot();
     void        afficherNomWordle() const;
+    bool        demanderContinuerPartie() const;
     void        nbTentativesAtteint() const;
     void        afficherRegles() const;
 };

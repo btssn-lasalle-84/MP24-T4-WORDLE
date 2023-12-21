@@ -50,6 +50,7 @@ class Wordle
     const std::string& getMotEntre() const;
     bool               setMotEntre(const std::string& motSaisi);
     std::string        mettreLettreEnCouleurSelonEtat() const;
+    bool               demanderContinuerPartie() const;
 };
 
 #endif

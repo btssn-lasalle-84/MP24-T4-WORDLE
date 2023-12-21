@@ -68,6 +68,14 @@ void IHMPartie::afficherNomWordle() const
 )" << endl;
 }
 
+bool IHMPartie::demanderContinuerPartie() const
+{
+    char choix;
+    cout << "Voulez-vous continuer à jouer ? (O/N) : ";
+    cin >> choix;
+    return (choix == 'O' || choix == 'o');
+}
+
 void IHMPartie::nbTentativesAtteint() const
 {
     std::cout << "Perdu ! Vous n'avez pas trouvé le mot."
