@@ -1,7 +1,6 @@
 #include "Wordle.h"
 #include "IHMPartie.h"
 #include "Joueur.h"
-#include <cctype>
 
 #ifdef DEBUG_WORDLE
 #include <iostream>

@@ -1,6 +1,8 @@
 #include "IHMPartie.h"
 #include "Wordle.h"
 #include <iostream>
+#include <algorithm>
+
 using namespace std;
 
 IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
@@ -49,7 +51,7 @@ string IHMPartie::saisirMot()
 
     cout << "Veuillez entrer un mot : ";
     cin >> entree;
-
+    transform(entree.begin(), entree.end(), entree.begin(), ::toupper);
     return entree;
 }
 
