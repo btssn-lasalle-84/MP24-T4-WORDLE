@@ -5,6 +5,8 @@
 
 #ifdef DEBUG_WORDLE
 #include <iostream>
+#include <algorithm> // Add this include for std::transform
+
 #endif
 
 Wordle::Wordle() :
@@ -23,41 +25,48 @@ void Wordle::demarrerPartie()
 {
     do
     {
-    initialiserPartie();
-    ihmPartie->afficherNomWordle();
-    ihmPartie->afficherRegles();
+        initialiserPartie();
+        ihmPartie->afficherNomWordle();
+        ihmPartie->afficherRegles();
 
-    int tentative = INCREMENTATION_TENTATIVES;
-    while(tentative <= NB_TENTATIVES_MAX)
-    {
-        std::string motSaisi = ihmPartie->saisirMot();
-        if(motSaisi.size() != TAILLE_MAX_MOT)
+        int tentative = INCREMENTATION_TENTATIVES;
+        while(tentative <= NB_TENTATIVES_MAX)
         {
-            std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
-                      << " lettres." << std::endl;
-            continue;
-        }
-        if(motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
-        {
-            std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
-            continue;
-        }
-
-        if(setMotEntre(motSaisi))
-        {
-            analyserMot();
-            motsDejaSaisis.insert(motSaisi);
-            joueur->proposerMot(motSaisi);
-            joueur->incrementerTentatives();
-            ihmPartie->afficherLettreEnCouleurSelonEtat();
-            if(estMotCorrect())
+            std::string motSaisi = ihmPartie->saisirMot();
+            if(motSaisi.size() != TAILLE_MAX_MOT)
             {
-#ifdef DEBUG_WORDLE
-                std::cout << "Félicitations ! Vous avez deviné le mot." << std::endl;
-#endif
-                break;
+                std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
+                          << " lettres." << std::endl;
+                continue;
             }
+            if(motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
+            {
+                std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
+                continue;
+            }
+
+            if(setMotEntre(motSaisi))
+            {
+                analyserMot();
+                motsDejaSaisis.insert(motSaisi);
+                joueur->proposerMot(motSaisi);
+                joueur->incrementerTentatives();
+                ihmPartie->afficherLettreEnCouleurSelonEtat();
+                if(estMotCorrect())
+                {
+#ifdef DEBUG_WORDLE
+                    std::cout << "Félicitations ! Vous avez deviné le mot." << std::endl;
+#endif
+                    break;
+                }
+            }
+            else
+            {
+            }
+            ++tentative;
         }
+    } while(ihmPartie->demanderContinuerPartie());
+    ihmPartie->nbTentativesAtteint();
         else
         {
         }
@@ -141,6 +150,8 @@ bool Wordle::setMotEntre(const std::string& motSaisi)
     }
 
     motEntre = motSaisi;
+
+    std::transform(motSaisi.begin(), motSaisi.end(), motEntre.begin(), ::tolower);
 
     return true;
 }
