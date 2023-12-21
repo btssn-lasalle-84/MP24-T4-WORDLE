@@ -17,6 +17,28 @@ void IHMPartie::afficherLettreEnCouleurSelonEtat() const
     std::cout << "Mot entré : " << jeuWordle->mettreLettreEnCouleurSelonEtat() << std::endl;
 }
 
+void IHMPartie::afficherRegles() const
+{
+    std::cout << "Bienvenue sur Wordle !" << std::endl
+              << std::endl
+              << "Les règles du jeu sont simple :  " << std::endl
+              << std::endl
+              << " - Deviner un mot de 5 lettres en 6 tentatives maximum  " << std::endl
+              << std::endl
+              << " - La lettre s'affiche en vert si elle est à la bonne place  " << std::endl
+              << std::endl
+              << " - La lettre s'affiche en jaune si elle est présente dans le "
+                 "mot mais au mauvais "
+                 "emplacement  "
+              << std::endl
+              << std::endl
+              << " - La lettre s'affiche en rouge si elle n'est pas présente "
+                 "dans le mot  "
+              << std::endl
+              << std::endl
+              << "Bonne chance ! " << std::endl
+              << std::endl;
+}
 void IHMPartie::afficherScore() const
 {
 }
@@ -33,7 +55,7 @@ string IHMPartie::saisirMot()
 
 void IHMPartie::afficherNomWordle() const
 {
-    cout << R"(
+  cout << R"(
 
   █████   ███   █████    ███████    ███████████   ██████████   █████       ██████████
  ░░███   ░███  ░░███   ███░░░░░███ ░░███░░░░░███ ░░███░░░░███ ░░███       ░░███░░░░░█
@@ -43,8 +65,7 @@ void IHMPartie::afficherNomWordle() const
    ░░░█████░█████░   ░░███     ███  ░███    ░███  ░███    ███  ░███      █ ░███ ░   █
      ░░███ ░░███      ░░░███████░   █████   █████ ██████████   ███████████ ██████████
       ░░░   ░░░         ░░░░░░░    ░░░░░   ░░░░░ ░░░░░░░░░░   ░░░░░░░░░░░ ░░░░░░░░░░
-)"
-        << endl;
+)" << endl;
 }
 
 void IHMPartie::nbTentativesAtteint() const
