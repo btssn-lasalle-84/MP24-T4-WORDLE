@@ -1,6 +1,6 @@
 #include "Wordle.h"
-#include "Joueur.h"
 #include "IHMPartie.h"
+#include "Joueur.h"
 
 #ifdef DEBUG_WORDLE
 #include <iostream>
@@ -24,6 +24,7 @@ void Wordle::demarrerPartie()
     {
     initialiserPartie();
     ihmPartie->afficherNomWordle();
+    ihmPartie->afficherRegles();
 
     int tentative = INCREMENTATION_TENTATIVES;
     while(tentative <= NB_TENTATIVES_MAX)
@@ -62,6 +63,7 @@ void Wordle::demarrerPartie()
         ++tentative;
     }
     } while (ihmPartie->demanderContinuerPartie());
+    ihmPartie->nbTentativesAtteint();
 }
 
 void Wordle::analyserMot()
@@ -99,7 +101,8 @@ void Wordle::analyserMot()
         }
     }
 
-    // Recherche des lettres présentes dans le mot mais au mauvais endroit (MAL_PLACE)
+    // Recherche des lettres présentes dans le mot mais au mauvais endroit
+    // (MAL_PLACE)
     for(size_t i = 0; i < motEntre.size(); ++i)
     {
         if(analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
