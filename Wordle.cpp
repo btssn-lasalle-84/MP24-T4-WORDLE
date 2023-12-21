@@ -1,6 +1,7 @@
 #include "Wordle.h"
 #include "IHMPartie.h"
 #include "Joueur.h"
+#include <cctype>
 
 #ifdef DEBUG_WORDLE
 #include <iostream>
@@ -66,6 +67,12 @@ void Wordle::demarrerPartie()
         }
     } while(ihmPartie->demanderContinuerPartie());
     ihmPartie->nbTentativesAtteint();
+        else
+        {
+        }
+        ++tentative;
+    } ihmPartie->nbTentativesAtteint();
+    } while (ihmPartie->demanderContinuerPartie());
 }
 
 void Wordle::analyserMot()
@@ -105,6 +112,7 @@ void Wordle::analyserMot()
 
     // Recherche des lettres présentes dans le mot mais au mauvais endroit
     // (MAL_PLACE)
+
     for(size_t i = 0; i < motEntre.size(); ++i)
     {
         if(analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
@@ -167,27 +175,29 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
 {
     std::string resultat;
 
-    for(size_t i = 0; i < motEntre.size(); ++i)
+    for (size_t i = 0; i < motEntre.size(); ++i)
     {
-        char        lettre = motEntre[i];
-        EtatAnalyse etat   = analyseMot[i];
+        char lettre = motEntre[i];
+        EtatAnalyse etat = analyseMot[i];
 
-        switch(etat)
+        switch (etat)
         {
-            case EtatAnalyse::ABSENTE_ROUGE:
-                resultat += "\033[31m" + std::string(1, lettre) + "\033[0m"; // Rouge
-                break;
-            case EtatAnalyse::BIEN_PLACE_VERT:
-                resultat += "\033[32m" + std::string(1, lettre) + "\033[0m"; // Vert
-                break;
-            case EtatAnalyse::MAL_PLACE_JAUNE:
-                resultat += "\033[33m" + std::string(1, lettre) + "\033[0m"; // Jaune
-                break;
-            default:
-                resultat += std::string(1, lettre);
-                break;
+        case EtatAnalyse::ABSENTE_ROUGE:
+            resultat += "\033[31m" + std::string(1, lettre) + "\033[0m"; // Rouge
+            break;
+        case EtatAnalyse::BIEN_PLACE_VERT:
+            resultat += "\033[32m" + std::string(1, lettre) + "\033[0m"; // Vert
+            break;
+        case EtatAnalyse::MAL_PLACE_JAUNE:
+            resultat += "\033[33m" + std::string(1, lettre) + "\033[0m"; // Jaune
+            break;
+        default:
+            resultat += std::string(1, lettre);
+            break;
         }
     }
 
     return resultat;
 }
+
+
