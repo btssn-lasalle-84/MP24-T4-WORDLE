@@ -46,3 +46,11 @@ void IHMPartie::afficherNomWordle() const
 )"
         << endl;
 }
+
+bool IHMPartie::demanderContinuerPartie() const
+{
+    char choix;
+    cout << "Voulez-vous continuer à jouer ? (O/N) : ";
+    cin >> choix;
+    return (choix == 'O' || choix == 'o');
+}

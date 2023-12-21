@@ -20,6 +20,8 @@ Wordle::~Wordle()
 
 void Wordle::demarrerPartie()
 {
+    do
+    {
     initialiserPartie();
     ihmPartie->afficherNomWordle();
 
@@ -59,6 +61,7 @@ void Wordle::demarrerPartie()
         }
         ++tentative;
     }
+    } while (ihmPartie->demanderContinuerPartie());
 }
 
 void Wordle::analyserMot()
