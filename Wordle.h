@@ -7,7 +7,6 @@
 #include <set>
 
 #define TAILLE_MAX_MOT 5
-
 #define DEBUG_WORDLE
 
 class Joueur;
@@ -50,7 +49,6 @@ class Wordle
     const std::string& getMotEntre() const;
     bool               setMotEntre(const std::string& motSaisi);
     std::string        mettreLettreEnCouleurSelonEtat() const;
-    bool               demanderContinuerPartie() const;
 };
 
 #endif
