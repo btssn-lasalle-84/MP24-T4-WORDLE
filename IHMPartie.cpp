@@ -51,7 +51,6 @@ string IHMPartie::saisirMot()
 
     cout << "Veuillez entrer un mot : ";
     cin >> entree;
-    transform(entree.begin(), entree.end(), entree.begin(), ::toupper);
     return entree;
 }
 
