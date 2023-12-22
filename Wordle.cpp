@@ -35,6 +35,9 @@ void Wordle::demarrerPartie()
                       << " lettres." << std::endl;
             continue;
         }
+
+        std::transform(motSaisi.begin(), motSaisi.end(), motSaisi.begin(), ::tolower);
+
         if(motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
         {
             std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
