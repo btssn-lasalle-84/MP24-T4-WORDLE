@@ -3,9 +3,8 @@
 
 using namespace std;
 
-Dictionnaire::Dictionnaire()
+Dictionnaire::Dictionnaire() : listeMots{ "samba", "livre", "pomme", "porte", "vague", "tigre", "jambe", "conte" }
 {
-    listeMots = { "samba", "livre", "pomme", "porte", "vague", "tigre", "jambe", "conte" };
     std::srand(static_cast<unsigned>(time(nullptr)));
 }
 
