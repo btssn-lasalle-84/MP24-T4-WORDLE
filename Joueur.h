@@ -10,6 +10,7 @@
 #define INCREMENTATION_TENTATIVES 1
 #define NB_TENTATIVES_MAX         6
 
+
 class Joueur
 {
   private:
