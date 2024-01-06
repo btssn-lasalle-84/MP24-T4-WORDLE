@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -56,11 +58,22 @@ void Joueur::reinitialiserJeu()
 
 void Joueur::proposerMot(const std::string& motPropose)
 {
-    motsProposes.push_back(motPropose);
+    std::string motEnMajuscules = motPropose;
+    std::transform(motEnMajuscules.begin(), motEnMajuscules.end(), motEnMajuscules.begin(), ::toupper);
+
+    if (std::find(motsProposes.begin(), motsProposes.end(), motEnMajuscules) != motsProposes.end())
+    {
+        std::cerr << "Erreur : Ce mot a déjà été proposé auparavant." << std::endl;
+        return;  
+    }
+
+    motsProposes.push_back(motEnMajuscules);
+
 #ifdef DEBUG_JOUEUR
     std::cout << "Nombre de mots proposés = " << motsProposes.size() << " - Mots Proposés = ";
-    for(int i = 0; i < motsProposes.size(); ++i)
+    for (int i = 0; i < motsProposes.size(); ++i)
         std::cout << motsProposes[i] << " ";
     std::cout << std::endl;
 #endif
 }
+
