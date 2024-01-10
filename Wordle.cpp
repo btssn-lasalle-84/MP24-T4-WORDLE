@@ -1,9 +1,10 @@
 #include "Wordle.h"
-#include "Joueur.h"
 #include "IHMPartie.h"
+#include "Joueur.h"
 
 #ifdef DEBUG_WORDLE
 #include <iostream>
+#include <algorithm>
 #endif
 
 Wordle::Wordle() :
@@ -20,46 +21,57 @@ Wordle::~Wordle()
 
 void Wordle::demarrerPartie()
 {
-    initialiserPartie();
-    ihmPartie->afficherNomWordle();
-
-    int tentative = INCREMENTATION_TENTATIVES;
-    while(tentative <= NB_TENTATIVES_MAX)
+    do
     {
-        std::string motSaisi = ihmPartie->saisirMot();
-        if(motSaisi.size() != TAILLE_MAX_MOT)
+        initialiserPartie();
+        ihmPartie->afficherNomWordle();
+        ihmPartie->afficherRegles();
+
+        int tentative = INCREMENTATION_TENTATIVES;
+        while (tentative <= NB_TENTATIVES_MAX)
         {
-            std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
-                      << " lettres." << std::endl;
-            continue;
+            std::string motSaisi = ihmPartie->saisirMot();
+            if (motSaisi.size() != TAILLE_MAX_MOT)
+            {
+                std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
+                          << " lettres." << std::endl;
+                continue;
+            }
+            if (motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
+            {
+                std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
+                continue;
+            }
+
+            if (setMotEntre(motSaisi))
+            {
+                analyserMot();
+                motsDejaSaisis.insert(motSaisi);
+                joueur->proposerMot(motSaisi);
+                joueur->incrementerTentatives();
+                ihmPartie->afficherLettreEnCouleurSelonEtat();
+                if (estMotCorrect())
+                {
+#ifdef DEBUG_WORDLE
+                    std::cout << "Félicitations ! Vous avez deviné le mot." << std::endl;
+#endif
+                    break;
+                }
+            }
+            else
+            {
+                return;
+            }
+            ++tentative;
         }
-        if(motsDejaSaisis.find(motSaisi) != motsDejaSaisis.end())
+        if(tentative > NB_TENTATIVES_MAX)
         {
-            std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
-            continue;
+            ihmPartie->nbTentativesAtteint();
         }
 
-        if(setMotEntre(motSaisi))
-        {
-            analyserMot();
-            motsDejaSaisis.insert(motSaisi);
-            joueur->proposerMot(motSaisi);
-            joueur->incrementerTentatives();
-            ihmPartie->afficherLettreEnCouleurSelonEtat();
-            if(estMotCorrect())
-            {
-#ifdef DEBUG_WORDLE
-                std::cout << "Félicitations ! Vous avez deviné le mot." << std::endl;
-#endif
-                break;
-            }
-        }
-        else
-        {
-        }
-        ++tentative;
-    }
+    } while (ihmPartie->demanderContinuerPartie());
 }
+
 
 void Wordle::analyserMot()
 {
@@ -96,7 +108,9 @@ void Wordle::analyserMot()
         }
     }
 
-    // Recherche des lettres présentes dans le mot mais au mauvais endroit (MAL_PLACE)
+    // Recherche des lettres présentes dans le mot mais au mauvais endroit
+    // (MAL_PLACE)
+
     for(size_t i = 0; i < motEntre.size(); ++i)
     {
         if(analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
@@ -135,11 +149,15 @@ bool Wordle::setMotEntre(const std::string& motSaisi)
 
     motEntre = motSaisi;
 
+    std::transform(motSaisi.begin(), motSaisi.end(), motEntre.begin(), ::tolower);
+
     return true;
 }
 
 void Wordle::initialiserPartie()
 {
+    joueur->reinitialiserJeu();
+    motsDejaSaisis.clear();
     motADeviner = dictionnaire.getMotAleatoire();
 }
 
@@ -159,7 +177,7 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
 
     for(size_t i = 0; i < motEntre.size(); ++i)
     {
-        char        lettre = motEntre[i];
+        char        lettre = std::toupper(motEntre[i]);
         EtatAnalyse etat   = analyseMot[i];
 
         switch(etat)
