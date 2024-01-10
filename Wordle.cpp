@@ -27,18 +27,18 @@ void Wordle::demarrerPartie()
         afficherInformationsPartie();
 
         int tentative = INCREMENTATION_TENTATIVES;
-        while (tentative <= NB_TENTATIVES_MAX)
+        while(tentative <= NB_TENTATIVES_MAX)
         {
             std::string motSaisi = saisirMot();
-            if (verifierSaisieMot(motSaisi))
+            if(verifierSaisieMot(motSaisi))
             {
                 continue;
             }
 
-            if (setMotEntre(motSaisi))
+            if(setMotEntre(motSaisi))
             {
                 traiterMotEntre();
-                if (estMotCorrect())
+                if(estMotCorrect())
                 {
                     afficherMessageVictoire();
                     break;
@@ -54,7 +54,7 @@ void Wordle::demarrerPartie()
 
         gererFinPartie(tentative);
 
-    } while (demanderContinuerPartie());
+    } while(demanderContinuerPartie());
 }
 
 void Wordle::initialiserPartie()
@@ -77,7 +77,7 @@ std::string Wordle::saisirMot()
 
 bool Wordle::verifierSaisieMot(const std::string& mot)
 {
-    if (verifierTailleMot(mot) || verifierMotDejaSaisi(mot))
+    if(verifierTailleMot(mot) || verifierMotDejaSaisi(mot))
     {
         return true;
     }
@@ -86,7 +86,7 @@ bool Wordle::verifierSaisieMot(const std::string& mot)
 
 bool Wordle::verifierTailleMot(const std::string& mot)
 {
-    if (mot.size() != TAILLE_MAX_MOT)
+    if(mot.size() != TAILLE_MAX_MOT)
     {
         std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
                   << " lettres." << std::endl;
@@ -97,7 +97,7 @@ bool Wordle::verifierTailleMot(const std::string& mot)
 
 bool Wordle::verifierMotDejaSaisi(const std::string& mot)
 {
-    if (motsDejaSaisis.find(mot) != motsDejaSaisis.end())
+    if(motsDejaSaisis.find(mot) != motsDejaSaisis.end())
     {
         std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
         return true;
@@ -116,7 +116,7 @@ void Wordle::traiterMotEntre()
 
 void Wordle::gererFinPartie(int tentative)
 {
-    if (tentative > NB_TENTATIVES_MAX)
+    if(tentative > NB_TENTATIVES_MAX)
     {
         ihmPartie->nbTentativesAtteint();
     }
@@ -136,7 +136,7 @@ bool Wordle::demanderContinuerPartie()
 
 void Wordle::analyserMot()
 {
-    if (motADeviner.size() != motEntre.size() || motADeviner.size() != TAILLE_MAX_MOT)
+    if(motADeviner.size() != motEntre.size() || motADeviner.size() != TAILLE_MAX_MOT)
     {
 #ifdef DEBUG_WORDLE
         std::cerr << "Erreur : problème de taille !" << std::endl;
@@ -145,25 +145,22 @@ void Wordle::analyserMot()
     }
 
     // Mise des états 2 à 0 dans le vecteur analyseMot
-    for (size_t i = 0; i < motADeviner.size(); ++i)
+    for(size_t i = 0; i < motADeviner.size(); ++i)
     {
-        if (analyseMot[i] == EtatAnalyse::MAL_PLACE_JAUNE)
-        {
-            analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
-        }
+        analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
     }
     // Mise des états 1 à 0 dans le vecteur analyseMot
-    for (size_t i = 0; i < motADeviner.size(); ++i)
+    for(size_t i = 0; i < motADeviner.size(); ++i)
     {
-        if (analyseMot[i] == EtatAnalyse::BIEN_PLACE_VERT)
+        if(analyseMot[i] == EtatAnalyse::BIEN_PLACE_VERT)
         {
             analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
         }
     }
     // Recherche des lettres présentes dans le mot au bon endroit (BIEN_PLACE)
-    for (size_t i = 0; i < motADeviner.size(); ++i)
+    for(size_t i = 0; i < motADeviner.size(); ++i)
     {
-        if (motADeviner[i] == motEntre[i] && analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
+        if(motADeviner[i] == motEntre[i] && analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
         {
             analyseMot[i] = EtatAnalyse::BIEN_PLACE_VERT;
         }
@@ -172,13 +169,13 @@ void Wordle::analyserMot()
     // Recherche des lettres présentes dans le mot mais au mauvais endroit
     // (MAL_PLACE)
 
-    for (size_t i = 0; i < motEntre.size(); ++i)
+    for(size_t i = 0; i < motEntre.size(); ++i)
     {
-        if (analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
+        if(analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
         {
-            for (size_t j = 0; j < motADeviner.size(); ++j)
+            for(size_t j = 0; j < motADeviner.size(); ++j)
             {
-                if (i != j && motEntre[i] == motADeviner[j])
+                if(i != j && motEntre[i] == motADeviner[j])
                 {
                     analyseMot[i] = EtatAnalyse::MAL_PLACE_JAUNE;
                     break;
@@ -200,7 +197,7 @@ const std::string& Wordle::getMotEntre() const
 
 bool Wordle::setMotEntre(const std::string& motSaisi)
 {
-    if (motSaisi.size() != TAILLE_MAX_MOT)
+    if(motSaisi.size() != TAILLE_MAX_MOT)
     {
 #ifdef DEBUG_WORDLE
         std::cerr << "Erreur : La taille du mot n'est pas conforme." << std::endl;
@@ -229,12 +226,12 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
 {
     std::string resultat;
 
-    for (size_t i = 0; i < motEntre.size(); ++i)
+    for(size_t i = 0; i < motEntre.size(); ++i)
     {
-        char lettre = std::toupper(motEntre[i]);
-        EtatAnalyse etat = analyseMot[i];
+        char        lettre = std::toupper(motEntre[i]);
+        EtatAnalyse etat   = analyseMot[i];
 
-        switch (etat)
+        switch(etat)
         {
             case EtatAnalyse::ABSENTE_ROUGE:
                 resultat += "\033[31m" + std::string(1, lettre) + "\033[0m"; // Rouge
