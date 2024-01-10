@@ -49,6 +49,17 @@ class Wordle
     const std::string& getMotEntre() const;
     bool               setMotEntre(const std::string& motSaisi);
     std::string        mettreLettreEnCouleurSelonEtat() const;
+    void               afficherInformationsPartie();
+    std::string        saisirMot();
+    bool               verifierSaisieMot(const std::string& mot);
+    void               traiterMotEntre();
+    void               gererFinPartie(int tentative);
+    void               afficherMessageVictoire();
+    bool               demanderContinuerPartie();
+    bool               verifierTailleMot(const std::string& mot);
+    bool               verifierMotDejaSaisi(const std::string& mot);
+
+
 };
 
 #endif
