@@ -125,7 +125,7 @@ void Wordle::gererFinPartie(int tentative)
 void Wordle::afficherMessageVictoire()
 {
 #ifdef DEBUG_WORDLE
-    std::cout << "Félicitations ! Vous avez deviné le mot." << std::endl;
+    std::cout << "Félicitations ! Vous avez deviné le mot en " << joueur->getNombreTentatives() << " tentatives." << std::endl;
 #endif
 }
 

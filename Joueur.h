@@ -27,6 +27,7 @@ class Joueur
     int  incrementerTentatives();
     int  getTentativesRestantes() const;
     int  getTentativesMax() const;
+    int  getNombreTentatives() const;
     void reinitialiserJeu();
     void proposerMot(const std::string& motPropose);
 };

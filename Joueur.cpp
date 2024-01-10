@@ -2,8 +2,6 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <algorithm>
-
 
 using namespace std;
 
@@ -49,6 +47,10 @@ int Joueur::getTentativesMax() const
     return NB_TENTATIVES_MAX;
 }
 
+int Joueur::getNombreTentatives() const
+{
+    return nbTentatives;
+}
 void Joueur::reinitialiserJeu()
 {
     scoreActuel  = 0;
@@ -58,22 +60,11 @@ void Joueur::reinitialiserJeu()
 
 void Joueur::proposerMot(const std::string& motPropose)
 {
-    std::string motEnMajuscules = motPropose;
-    std::transform(motEnMajuscules.begin(), motEnMajuscules.end(), motEnMajuscules.begin(), ::toupper);
-
-    if (std::find(motsProposes.begin(), motsProposes.end(), motEnMajuscules) != motsProposes.end())
-    {
-        std::cerr << "Erreur : Ce mot a déjà été proposé auparavant." << std::endl;
-        return;  
-    }
-
-    motsProposes.push_back(motEnMajuscules);
-
+    motsProposes.push_back(motPropose);
 #ifdef DEBUG_JOUEUR
     std::cout << "Nombre de mots proposés = " << motsProposes.size() << " - Mots Proposés = ";
-    for (int i = 0; i < motsProposes.size(); ++i)
+    for(int i = 0; i < motsProposes.size(); ++i)
         std::cout << motsProposes[i] << " ";
     std::cout << std::endl;
 #endif
 }
-
