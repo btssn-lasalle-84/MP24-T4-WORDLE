@@ -71,12 +71,11 @@ Version 1.0
 )" << endl;
 }
 
-bool IHMPartie::demanderContinuerPartie() const
-{
-    char choix;
-    cout << "Voulez-vous continuer à jouer ? (O/N) : ";
-    cin >> choix;
-    return (choix == 'O' || choix == 'o');
+bool IHMPartie::afficherMenuFin() const {
+    std::cout << "Menu : " << std::endl;
+    std::cout << "1 - Rejouer" << std::endl;
+    std::cout << "2 - Afficher l'historique" << std::endl;
+    std::cout << "3 - Quitter le jeu" << std::endl;
 }
 
 void IHMPartie::nbTentativesAtteint() const
