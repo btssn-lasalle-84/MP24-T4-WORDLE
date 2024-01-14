@@ -21,8 +21,6 @@ Wordle::~Wordle()
 
 void Wordle::demarrerPartie()
 {
-    do
-    {
         initialiserPartie();
         afficherInformationsPartie();
 
@@ -53,9 +51,9 @@ void Wordle::demarrerPartie()
         }
 
         gererFinPartie(tentative);
-
-    } while(demanderContinuerPartie());
-}
+        ihmPartie->afficherMenuFin();
+        saisirChoixMenu();
+}   
 
 void Wordle::initialiserPartie()
 {
@@ -129,10 +127,7 @@ void Wordle::afficherMessageVictoire()
 #endif
 }
 
-bool Wordle::demanderContinuerPartie()
-{
-    return ihmPartie->demanderContinuerPartie();
-}
+
 
 void Wordle::analyserMot()
 {
@@ -249,4 +244,27 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
     }
 
     return resultat;
+}
+
+bool Wordle::saisirChoixMenu() {
+    
+    int choix;
+    std::cout << "Veuillez entrer votre choix (1, 2 ou 3) : ";
+    std::cin >> choix;
+
+    switch (choix) {
+        case 1:
+            Wordle::demarrerPartie();
+            break;
+        case 2:
+            // TODO
+            break;
+        case 3:
+            return false;
+        default:
+            std::cout << "Choix invalide. Veuillez entrer 1, 2 ou 3." << std::endl;
+            break;
+    }
+
+    return true;
 }

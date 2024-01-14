@@ -55,7 +55,7 @@ class Wordle
     void               traiterMotEntre();
     void               gererFinPartie(int tentative);
     void               afficherMessageVictoire();
-    bool               demanderContinuerPartie();
+    bool               saisirChoixMenu();
     bool               verifierTailleMot(const std::string& mot);
     bool               verifierMotDejaSaisi(const std::string& mot);
 
