@@ -68,3 +68,8 @@ void Joueur::proposerMot(const std::string& motPropose)
     std::cout << std::endl;
 #endif
 }
+
+const std::vector<std::string>& Joueur::getMotsProposes() const 
+{
+    return motsProposes;
+}

@@ -246,8 +246,8 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
     return resultat;
 }
 
-bool Wordle::saisirChoixMenu() {
-    
+bool Wordle::saisirChoixMenu() 
+{
     int choix;
     std::cout << "Veuillez entrer votre choix (1, 2 ou 3) : ";
     std::cin >> choix;
@@ -257,7 +257,7 @@ bool Wordle::saisirChoixMenu() {
             Wordle::demarrerPartie();
             break;
         case 2:
-            // TODO
+            ihmPartie->afficherHistoriqueParties();
             break;
         case 3:
             return false;
@@ -267,4 +267,9 @@ bool Wordle::saisirChoixMenu() {
     }
 
     return true;
+}
+
+std::vector<std::string> Wordle::getHistoriqueParties() const 
+{
+    return joueur->getMotsProposes(); 
 }

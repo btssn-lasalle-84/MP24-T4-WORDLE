@@ -71,11 +71,14 @@ Version 1.0
 )" << endl;
 }
 
-bool IHMPartie::afficherMenuFin() const {
+bool IHMPartie::afficherMenuFin() const 
+{
     std::cout << "Menu : " << std::endl;
     std::cout << "1 - Rejouer" << std::endl;
     std::cout << "2 - Afficher l'historique" << std::endl;
     std::cout << "3 - Quitter le jeu" << std::endl;
+
+    return true;
 }
 
 void IHMPartie::nbTentativesAtteint() const
@@ -83,3 +86,34 @@ void IHMPartie::nbTentativesAtteint() const
     std::cout << "Perdu ! Vous n'avez pas trouvé le mot."
               << " Le mot à trouver était : " << jeuWordle->getMotADeviner() << std::endl;
 }
+
+void IHMPartie::afficherHistoriqueParties() const 
+{
+    std::vector<std::string> historique = jeuWordle->getHistoriqueParties();
+
+    std::cout << "Historique des parties en cours :" << std::endl;
+
+    for (size_t i = 0; i < historique.size(); ++i) 
+    {
+    std::cout << historique[i] << std::endl;
+    }
+
+    bool partieGagnee = jeuWordle->estMotCorrect();
+
+    if (partieGagnee) 
+    {
+        std::cout << "Partie gagnée !";
+    } 
+    else 
+    {
+        std::cout << "Partie perdue. Le mot était : " << jeuWordle->getMotADeviner();
+    }
+
+    std::cout << std::endl;
+
+    afficherMenuFin();
+    jeuWordle->saisirChoixMenu();
+}
+
+
+
