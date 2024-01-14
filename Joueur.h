@@ -30,6 +30,7 @@ class Joueur
     int  getNombreTentatives() const;
     void reinitialiserJeu();
     void proposerMot(const std::string& motPropose);
+        const std::vector<std::string>& getMotsProposes() const;
 };
 
 #endif // JOUEUR_H

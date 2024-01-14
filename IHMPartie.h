@@ -21,6 +21,7 @@ class IHMPartie
     bool        afficherMenuFin() const;
     void        nbTentativesAtteint() const;
     void        afficherRegles() const;
+    void afficherHistoriqueParties() const;
 };
 
 #endif // IHMPARTIE_H
