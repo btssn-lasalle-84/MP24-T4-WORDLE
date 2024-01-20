@@ -1,8 +1,8 @@
 TARGET = wordle.out # Nom de l'exécutable
 OBJETS = Dictionnaire.o  Joueur.o  main.o  IHMPartie.o  Wordle.o
-CXX = g++ -c # Compilateur
+CXX = g++ -g -c # Compilateur
 LD = g++ -o
-CXXFLAGS = -c -Wall # Options de compilation
+CXXFLAGS = -c -g -Wall # Options de compilation
 RM = rm -f
 
 all: $(TARGET) # Règle par défaut : construire l'exécutable

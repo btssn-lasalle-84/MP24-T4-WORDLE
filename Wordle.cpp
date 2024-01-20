@@ -23,6 +23,7 @@ void Wordle::demarrerPartie()
 {
         initialiserPartie();
         afficherInformationsPartie();
+        ihmPartie->choisirTheme();
 
         int tentative = INCREMENTATION_TENTATIVES;
         while(tentative <= NB_TENTATIVES_MAX)
@@ -49,7 +50,6 @@ void Wordle::demarrerPartie()
 
             ++tentative;
         }
-
         gererFinPartie(tentative);
         ihmPartie->afficherMenuFin();
         saisirChoixMenu();
@@ -126,8 +126,6 @@ void Wordle::afficherMessageVictoire()
     std::cout << "Félicitations ! Vous avez deviné le mot en " << joueur->getNombreTentatives() << " tentatives." << std::endl;
 #endif
 }
-
-
 
 void Wordle::analyserMot()
 {

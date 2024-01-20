@@ -15,6 +15,9 @@ class Dictionnaire
     Dictionnaire();
 
     std::string getMotAleatoire() const;
+    void chargerMotsDepuisFichier(const std::string& nomFichier);
+    const std::vector<std::string> &getListeMots() const;
+
 };
 
 #endif

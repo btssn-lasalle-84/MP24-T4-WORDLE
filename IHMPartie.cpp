@@ -1,12 +1,36 @@
 #include "IHMPartie.h"
 #include "Wordle.h"
+#include "Dictionnaire.h"
 #include <iostream>
 #include <algorithm>
-
+#include <limits>
 using namespace std;
 
 IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 {
+}
+
+void IHMPartie::choisirTheme()
+{
+    std::cout << "Choisissez le thème :" << std::endl;
+    std::cout << "1 - Aliments" << std::endl;
+    std::cout << "2 - Animaux" << std::endl;
+
+    int choixTheme;
+    std::cin >> choixTheme;
+
+    switch (choixTheme)
+    {
+    case 1:
+        dictionnaire.chargerMotsDepuisFichier("aliments.txt");
+        break;
+    case 2:
+        dictionnaire.chargerMotsDepuisFichier("animaux.txt");
+        break;
+    default:
+        std::cerr << "Choix de thème invalide. Utilisation du thème par défaut." << std::endl;
+        break;
+    }
 }
 
 void IHMPartie::afficherMotAdeviner()
@@ -67,7 +91,7 @@ void IHMPartie::afficherNomWordle() const
      ░░███ ░░███      ░░░███████░   █████   █████ ██████████   ███████████ ██████████
       ░░░   ░░░         ░░░░░░░    ░░░░░   ░░░░░ ░░░░░░░░░░   ░░░░░░░░░░░ ░░░░░░░░░░
 
-Version 1.0
+Version 2.0
 )" << endl;
 }
 
