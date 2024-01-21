@@ -10,27 +10,24 @@ IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 {
 }
 
-void IHMPartie::choisirTheme()
+std::string IHMPartie::choisirTheme(std::vector<std::string> listeThemes) const
 {
+    if(listeThemes.empty())
+    {
+        return "";
+    }
+
     std::cout << "Choisissez le thème :" << std::endl;
+    //@todo : parcourir listeThemes pour afficher le menu
     std::cout << "1 - Aliments" << std::endl;
     std::cout << "2 - Animaux" << std::endl;
+    std::cout << "3 - Divers" << std::endl;
 
     int choixTheme;
     std::cin >> choixTheme;
 
-    switch (choixTheme)
-    {
-    case 1:
-        dictionnaire.chargerMotsDepuisFichier("aliments.txt");
-        break;
-    case 2:
-        dictionnaire.chargerMotsDepuisFichier("animaux.txt");
-        break;
-    default:
-        std::cerr << "Choix de thème invalide. Utilisation du thème par défaut." << std::endl;
-        break;
-    }
+    //@todo : vérifier la saisie
+    return listeThemes[choixTheme - 1];
 }
 
 void IHMPartie::afficherMotAdeviner()
@@ -95,7 +92,7 @@ Version 2.0
 )" << endl;
 }
 
-bool IHMPartie::afficherMenuFin() const 
+bool IHMPartie::afficherMenuFin() const
 {
     std::cout << "Menu : " << std::endl;
     std::cout << "1 - Rejouer" << std::endl;
@@ -111,24 +108,24 @@ void IHMPartie::nbTentativesAtteint() const
               << " Le mot à trouver était : " << jeuWordle->getMotADeviner() << std::endl;
 }
 
-void IHMPartie::afficherHistoriqueParties() const 
+void IHMPartie::afficherHistoriqueParties() const
 {
     std::vector<std::string> historique = jeuWordle->getHistoriqueParties();
 
     std::cout << "Historique des parties en cours :" << std::endl;
 
-    for (size_t i = 0; i < historique.size(); ++i) 
+    for(size_t i = 0; i < historique.size(); ++i)
     {
-    std::cout << historique[i] << std::endl;
+        std::cout << historique[i] << std::endl;
     }
 
     bool partieGagnee = jeuWordle->estMotCorrect();
 
-    if (partieGagnee) 
+    if(partieGagnee)
     {
         std::cout << "Partie gagnée !";
-    } 
-    else 
+    }
+    else
     {
         std::cout << "Partie perdue. Le mot était : " << jeuWordle->getMotADeviner();
     }
@@ -138,6 +135,3 @@ void IHMPartie::afficherHistoriqueParties() const
     afficherMenuFin();
     jeuWordle->saisirChoixMenu();
 }
-
-
-

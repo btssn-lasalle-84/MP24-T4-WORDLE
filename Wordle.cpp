@@ -21,44 +21,44 @@ Wordle::~Wordle()
 
 void Wordle::demarrerPartie()
 {
-        initialiserPartie();
-        afficherInformationsPartie();
-        ihmPartie->choisirTheme();
+    initialiserPartie();
+    afficherInformationsPartie();
 
-        int tentative = INCREMENTATION_TENTATIVES;
-        while(tentative <= NB_TENTATIVES_MAX)
+    int tentative = INCREMENTATION_TENTATIVES;
+    while(tentative <= NB_TENTATIVES_MAX)
+    {
+        std::string motSaisi = saisirMot();
+        if(verifierSaisieMot(motSaisi))
         {
-            std::string motSaisi = saisirMot();
-            if(verifierSaisieMot(motSaisi))
-            {
-                continue;
-            }
-
-            if(setMotEntre(motSaisi))
-            {
-                traiterMotEntre();
-                if(estMotCorrect())
-                {
-                    afficherMessageVictoire();
-                    break;
-                }
-            }
-            else
-            {
-                return;
-            }
-
-            ++tentative;
+            continue;
         }
-        gererFinPartie(tentative);
-        ihmPartie->afficherMenuFin();
-        saisirChoixMenu();
-}   
+
+        if(setMotEntre(motSaisi))
+        {
+            traiterMotEntre();
+            if(estMotCorrect())
+            {
+                afficherMessageVictoire();
+                break;
+            }
+        }
+        else
+        {
+            return;
+        }
+
+        ++tentative;
+    }
+    gererFinPartie(tentative);
+    ihmPartie->afficherMenuFin();
+    saisirChoixMenu();
+}
 
 void Wordle::initialiserPartie()
 {
     joueur->reinitialiserJeu();
     motsDejaSaisis.clear();
+    dictionnaire.chargerMotsDepuisFichier(ihmPartie->choisirTheme(dictionnaire.getListeThemes()));
     motADeviner = dictionnaire.getMotAleatoire();
 }
 
@@ -123,7 +123,8 @@ void Wordle::gererFinPartie(int tentative)
 void Wordle::afficherMessageVictoire()
 {
 #ifdef DEBUG_WORDLE
-    std::cout << "Félicitations ! Vous avez deviné le mot en " << joueur->getNombreTentatives() << " tentatives." << std::endl;
+    std::cout << "Félicitations ! Vous avez deviné le mot en " << joueur->getNombreTentatives()
+              << " tentatives." << std::endl;
 #endif
 }
 
@@ -244,13 +245,14 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
     return resultat;
 }
 
-bool Wordle::saisirChoixMenu() 
+bool Wordle::saisirChoixMenu()
 {
     int choix;
     std::cout << "Veuillez entrer votre choix (1, 2 ou 3) : ";
     std::cin >> choix;
 
-    switch (choix) {
+    switch(choix)
+    {
         case 1:
             Wordle::demarrerPartie();
             break;
@@ -267,7 +269,7 @@ bool Wordle::saisirChoixMenu()
     return true;
 }
 
-std::vector<std::string> Wordle::getHistoriqueParties() const 
+std::vector<std::string> Wordle::getHistoriqueParties() const
 {
-    return joueur->getMotsProposes(); 
+    return joueur->getMotsProposes();
 }

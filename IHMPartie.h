@@ -1,8 +1,9 @@
 #ifndef IHMPARTIE_H
 #define IHMPARTIE_H
-#include <iostream>
+
 #define DEBUG_IHMPARTIE
-#include "Dictionnaire.h"
+
+#include <string>
 #include <vector>
 
 class Wordle;
@@ -11,7 +12,6 @@ class IHMPartie
 {
   private:
     Wordle* jeuWordle;
-    Dictionnaire dictionnaire;
 
   public:
     IHMPartie(Wordle* wordle = nullptr);
@@ -25,8 +25,7 @@ class IHMPartie
     void        nbTentativesAtteint() const;
     void        afficherRegles() const;
     void        afficherHistoriqueParties() const;
-    void        choisirTheme();
-
+    std::string choisirTheme(std::vector<std::string> listeThemes) const;
 };
 
 #endif // IHMPARTIE_H
