@@ -7,8 +7,8 @@
 
 - Nom du logiciel : Wordle
 - Date de début : 29 novembre 2023 12h28
-- Numéro de version du logiciel : 1.0
-- Date de cette version du logiciel : Décembre 2023
+- Numéro de version du logiciel : 2.0
+- Date de cette version du logiciel : Janvier 2024
 
 ## Présentation + Objectifs
 
@@ -38,7 +38,11 @@ $ ./wordle.out
 
 ## Ce que le logiciel fait dans cette version
 
-Le logiciel dans la version 1.0 propose au joueur de trouver un mot de 5 lettres en 6 tentatives. Si le mot contient plus de 5 lettres, le mot n'est pas accepté et le joueur doit resaisir un mot de la bonne taille.
+Le logiciel dans la version 2.0 propose au joueur de trouver un mot de 5 lettres en 6 tentatives. Si le mot contient plus de 5 lettres, le mot n'est pas accepté et le joueur doit resaisir un mot de la bonne taille.
+
+Il est possible de choisir un thème de mot particulier à travers un menu.
+
+A chaque fin de partie, il est possible de relancer une partie, d'afficher l'historique de la dernière partie ou de quitter le jeu.
 
 Lorsque le joueur a deviné le mot, le jeu affiche "Félicitations ! Vous avez deviné le mot."
 
@@ -47,8 +51,6 @@ Lorsque le joueur a deviné le mot, le jeu affiche "Félicitations ! Vous avez d
 ## TODO
 
 - Corriger les défauts constatés par le client
-- Ajouter les critères de mots valables manquant
-- Version 2.0 selon le cahier des charges
 - Version 3.0 selon le cahier des charges
 
 ## Défauts constatés non corrigés
@@ -60,7 +62,6 @@ cours et les noms propres.
 - Les mots composés (chewing-gum, week-end...).
 - Les mots qui ne commencent pas par la première lettre indiquée.
 
-Si le joueur ne devine pas le mot au bout de 6 tentatives, il n'y a pas de message retour sur le terminal affichant le mot qui était à deviner (Exemple : "Le mot à deviner était : "  ")
 
 ## Itérations
 
