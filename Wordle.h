@@ -36,7 +36,6 @@ class Wordle
     std::set<std::string> motsDejaSaisis;
 
     void initialiserPartie();
-    bool estMotCorrect() const;
     bool estLettreCorrecte(char lettre, int position) const;
 
   public:
@@ -49,6 +48,19 @@ class Wordle
     const std::string& getMotEntre() const;
     bool               setMotEntre(const std::string& motSaisi);
     std::string        mettreLettreEnCouleurSelonEtat() const;
+    void               afficherInformationsPartie();
+    std::string        saisirMot();
+    bool               verifierSaisieMot(const std::string& mot);
+    void               traiterMotEntre();
+    void               gererFinPartie(int tentative);
+    void               afficherMessageVictoire();
+    bool               saisirChoixMenu();
+    bool               verifierTailleMot(const std::string& mot);
+    bool               verifierMotDejaSaisi(const std::string& mot);
+    std::vector<std::string> getHistoriqueParties() const;
+    bool estMotCorrect() const;
+
+
 };
 
 #endif
