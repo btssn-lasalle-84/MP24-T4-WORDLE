@@ -17,16 +17,22 @@ std::string IHMPartie::choisirTheme(std::vector<std::string> listeThemes) const
         return "";
     }
 
-    std::cout << "Choisissez le thème :" << std::endl;
-    //@todo : parcourir listeThemes pour afficher le menu
-    std::cout << "1 - Aliments" << std::endl;
-    std::cout << "2 - Animaux" << std::endl;
-    std::cout << "3 - Divers" << std::endl;
+std::cout << "Choisissez le thème :" << std::endl;
+
+    std::vector<std::string> nomsThemes = dictionnaire.getNomsThemes();
+    for (size_t i = 0; i < nomsThemes.size(); ++i)
+    {
+        std::cout << i + 1 << " - " << nomsThemes[i] << std::endl;
+    }
 
     int choixTheme;
     std::cin >> choixTheme;
 
-    //@todo : vérifier la saisie
+    while (choixTheme < 1 || choixTheme > static_cast<int>(listeThemes.size()))
+    {
+        std::cout << "Saisie invalide. Veuillez choisir un thème valide." << std::endl;
+        std::cin >> choixTheme;
+    }
     return listeThemes[choixTheme - 1];
 }
 

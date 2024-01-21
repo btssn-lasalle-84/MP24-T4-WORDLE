@@ -22,7 +22,6 @@ Wordle::~Wordle()
 void Wordle::demarrerPartie()
 {
     initialiserPartie();
-    afficherInformationsPartie();
 
     int tentative = INCREMENTATION_TENTATIVES;
     while(tentative <= NB_TENTATIVES_MAX)
@@ -58,7 +57,9 @@ void Wordle::initialiserPartie()
 {
     joueur->reinitialiserJeu();
     motsDejaSaisis.clear();
-    dictionnaire.chargerMotsDepuisFichier(ihmPartie->choisirTheme(dictionnaire.getListeThemes()));
+    afficherInformationsPartie();
+    std::string themeChoisi = ihmPartie->choisirTheme(dictionnaire.getListeThemes());
+    dictionnaire.chargerMotsDepuisFichier(themeChoisi);
     motADeviner = dictionnaire.getMotAleatoire();
 }
 

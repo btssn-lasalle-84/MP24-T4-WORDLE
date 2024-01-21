@@ -1,5 +1,6 @@
 #ifndef IHMPARTIE_H
 #define IHMPARTIE_H
+#include "Dictionnaire.h"
 
 #define DEBUG_IHMPARTIE
 
@@ -12,6 +13,7 @@ class IHMPartie
 {
   private:
     Wordle* jeuWordle;
+    Dictionnaire dictionnaire;
 
   public:
     IHMPartie(Wordle* wordle = nullptr);

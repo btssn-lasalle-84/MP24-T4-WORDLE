@@ -20,6 +20,7 @@ class Dictionnaire
     std::vector<std::string> getListeMots() const;
     std::vector<std::string> getListeThemes() const;
     void                     chargerThemes();
+    std::vector<std::string> getNomsThemes() const;
 };
 
 #endif
