@@ -6,6 +6,9 @@
 
 #define DEBUG_DICTIONNAIRE
 
+#define CHEMIN_THEMES    "themes/"
+#define EXTENSION_THEMES ".dic"
+
 class Dictionnaire
 {
   private:
@@ -16,7 +19,7 @@ class Dictionnaire
     Dictionnaire();
 
     std::string              getMotAleatoire() const;
-    void                     chargerMotsDepuisFichier(const std::string& nomFichier);
+    void                     chargerMots(int numeroThemeChoisi);
     std::vector<std::string> getListeMots() const;
     std::vector<std::string> getListeThemes() const;
     void                     chargerThemes();

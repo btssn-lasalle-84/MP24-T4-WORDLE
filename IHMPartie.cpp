@@ -1,26 +1,25 @@
 #include "IHMPartie.h"
 #include "Wordle.h"
-#include "Dictionnaire.h"
 #include <iostream>
 #include <algorithm>
 #include <limits>
+
 using namespace std;
 
 IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 {
 }
 
-std::string IHMPartie::choisirTheme(std::vector<std::string> listeThemes) const
+int IHMPartie::choisirTheme(const std::vector<std::string>& nomsThemes) const
 {
-    if(listeThemes.empty())
+    if(nomsThemes.empty())
     {
-        return "";
+        return -1;
     }
 
-std::cout << "Choisissez le thème :" << std::endl;
+    std::cout << "Choisissez le thème :" << std::endl;
 
-    std::vector<std::string> nomsThemes = dictionnaire.getNomsThemes();
-    for (size_t i = 0; i < nomsThemes.size(); ++i)
+    for(size_t i = 0; i < nomsThemes.size(); ++i)
     {
         std::cout << i + 1 << " - " << nomsThemes[i] << std::endl;
     }
@@ -28,12 +27,12 @@ std::cout << "Choisissez le thème :" << std::endl;
     int choixTheme;
     std::cin >> choixTheme;
 
-    while (choixTheme < 1 || choixTheme > static_cast<int>(listeThemes.size()))
+    while(choixTheme < 1 || choixTheme > static_cast<int>(nomsThemes.size()))
     {
         std::cout << "Saisie invalide. Veuillez choisir un thème valide." << std::endl;
         std::cin >> choixTheme;
     }
-    return listeThemes[choixTheme - 1];
+    return (choixTheme - 1);
 }
 
 void IHMPartie::afficherMotAdeviner()
