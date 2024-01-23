@@ -18,6 +18,7 @@
   - [Diagramme de classes](#diagramme-de-classes)
   - [Équipe de développement](#équipe-de-développement)
 
+---
 
 ## Informations
 
