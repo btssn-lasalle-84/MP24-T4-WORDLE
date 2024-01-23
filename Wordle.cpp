@@ -58,8 +58,8 @@ void Wordle::initialiserPartie()
     joueur->reinitialiserJeu();
     motsDejaSaisis.clear();
     afficherInformationsPartie();
-    std::string themeChoisi = ihmPartie->choisirTheme(dictionnaire.getListeThemes());
-    dictionnaire.chargerMotsDepuisFichier(themeChoisi);
+    int numeroThemeChoisi = ihmPartie->choisirTheme(dictionnaire.getNomsThemes());
+    dictionnaire.chargerMots(numeroThemeChoisi);
     motADeviner = dictionnaire.getMotAleatoire();
 }
 

@@ -2,14 +2,12 @@
 #include <algorithm> // find
 #include <fstream>
 #include <iostream>
-#include <dirent.h>  // Ajout de la bibliothèque pour la gestion des répertoires
-
+#include <dirent.h> // opendir et readdir
+#include <cstring>  // strlen
 
 using namespace std;
 
-Dictionnaire::Dictionnaire() :
-    listeMots{ "samba", "livre", "pomme", "porte", "vague", "tigre", "jambe", "conte" },
-    listeThemes{ "themes/aliments.dic", "themes/animaux.dic", "divers.dic" }
+Dictionnaire::Dictionnaire() : listeMots{}, listeThemes{}
 {
     std::srand(static_cast<unsigned>(time(nullptr)));
 
@@ -22,13 +20,19 @@ std::string Dictionnaire::getMotAleatoire() const
     return listeMots[indiceAleatoire];
 }
 
-void Dictionnaire::chargerMotsDepuisFichier(const std::string& nomFichier)
+void Dictionnaire::chargerMots(int numeroThemeChoisi)
 {
-    std::ifstream fichier(nomFichier);
+    if(numeroThemeChoisi < 0 || numeroThemeChoisi >= static_cast<int>(listeThemes.size()))
+    {
+        return;
+    }
+
+    std::ifstream fichier(listeThemes[numeroThemeChoisi]);
 
     if(!fichier.is_open())
     {
-        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << nomFichier << std::endl;
+        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << listeThemes[numeroThemeChoisi]
+                  << std::endl;
         return;
     }
 
@@ -57,19 +61,21 @@ std::vector<std::string> Dictionnaire::getListeThemes() const
 
 void Dictionnaire::chargerThemes()
 {
-    const std::string cheminDossierThemes = "themes/";
     listeThemes.clear();
-    DIR* repertoire = opendir(cheminDossierThemes.c_str());
-    if (repertoire == nullptr)
+
+    const std::string cheminDossierThemes = CHEMIN_THEMES;
+    DIR*              repertoire          = opendir(cheminDossierThemes.c_str());
+    if(repertoire == nullptr)
     {
         std::cerr << "Erreur : Impossible d'ouvrir le répertoire themes" << std::endl;
         return;
     }
     struct dirent* entry;
-    while ((entry = readdir(repertoire)) != nullptr)
+    while((entry = readdir(repertoire)) != nullptr)
     {
         std::string nomFichier = entry->d_name;
-        if (nomFichier.size() > 4 && nomFichier.substr(nomFichier.size() - 4) == ".dic")
+        if(nomFichier.size() > (int)strlen(EXTENSION_THEMES) &&
+           nomFichier.substr(nomFichier.size() - (int)strlen(EXTENSION_THEMES)) == EXTENSION_THEMES)
         {
             listeThemes.push_back(cheminDossierThemes + nomFichier);
         }
@@ -80,10 +86,10 @@ void Dictionnaire::chargerThemes()
 std::vector<std::string> Dictionnaire::getNomsThemes() const
 {
     std::vector<std::string> nomsThemes;
-    for (const auto& themeChemin : listeThemes)
+    for(const auto& themeChemin: listeThemes)
     {
         size_t dernierSlash = themeChemin.find_last_of('/');
-        if (dernierSlash != std::string::npos)
+        if(dernierSlash != std::string::npos)
         {
             nomsThemes.push_back(themeChemin.substr(dernierSlash + 1));
         }
