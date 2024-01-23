@@ -1,10 +1,10 @@
 #include "Wordle.h"
 #include "IHMPartie.h"
 #include "Joueur.h"
+#include <algorithm>
 
 #ifdef DEBUG_WORDLE
 #include <iostream>
-#include <algorithm>
 #endif
 
 Wordle::Wordle() :
@@ -37,7 +37,7 @@ void Wordle::demarrerPartie()
             traiterMotEntre();
             if(estMotCorrect())
             {
-                afficherMessageVictoire();
+                ihmPartie->afficherMessageVictoire(joueur->getNbTentatives());
                 break;
             }
         }
@@ -50,23 +50,17 @@ void Wordle::demarrerPartie()
     }
     gererFinPartie(tentative);
     ihmPartie->afficherMenuFin();
-    saisirChoixMenu();
+    gererMenu();
 }
 
 void Wordle::initialiserPartie()
 {
     joueur->reinitialiserJeu();
     motsDejaSaisis.clear();
-    afficherInformationsPartie();
-    std::string themeChoisi = ihmPartie->choisirTheme(dictionnaire.getListeThemes());
-    dictionnaire.chargerMotsDepuisFichier(themeChoisi);
+    ihmPartie->afficherInformationsPartie();
+    int numeroThemeChoisi = ihmPartie->choisirTheme(dictionnaire.getNomsThemes());
+    dictionnaire.chargerMots(numeroThemeChoisi);
     motADeviner = dictionnaire.getMotAleatoire();
-}
-
-void Wordle::afficherInformationsPartie()
-{
-    ihmPartie->afficherNomWordle();
-    ihmPartie->afficherRegles();
 }
 
 std::string Wordle::saisirMot()
@@ -87,8 +81,8 @@ bool Wordle::verifierTailleMot(const std::string& mot)
 {
     if(mot.size() != TAILLE_MAX_MOT)
     {
-        std::cerr << "Erreur : La taille du mot doit être exactement de " << TAILLE_MAX_MOT
-                  << " lettres." << std::endl;
+        ihmPartie->afficherErreur("Le mot doit être exactement de " +
+                                  std::to_string(TAILLE_MAX_MOT) + " lettres.");
         return true;
     }
     return false;
@@ -98,7 +92,7 @@ bool Wordle::verifierMotDejaSaisi(const std::string& mot)
 {
     if(motsDejaSaisis.find(mot) != motsDejaSaisis.end())
     {
-        std::cerr << "Erreur : Ce mot a déjà été saisi auparavant." << std::endl;
+        ihmPartie->afficherErreur("Ce mot a déjà été saisi auparavant.");
         return true;
     }
     return false;
@@ -111,22 +105,15 @@ void Wordle::traiterMotEntre()
     joueur->proposerMot(motEntre);
     joueur->incrementerTentatives();
     ihmPartie->afficherLettreEnCouleurSelonEtat();
+    ihmPartie->afficherTentatives(joueur->getMotsProposes());
 }
 
 void Wordle::gererFinPartie(int tentative)
 {
     if(tentative > NB_TENTATIVES_MAX)
     {
-        ihmPartie->nbTentativesAtteint();
+        ihmPartie->afficherMessageDefaite();
     }
-}
-
-void Wordle::afficherMessageVictoire()
-{
-#ifdef DEBUG_WORDLE
-    std::cout << "Félicitations ! Vous avez deviné le mot en " << joueur->getNombreTentatives()
-              << " tentatives." << std::endl;
-#endif
 }
 
 void Wordle::analyserMot()
@@ -139,19 +126,12 @@ void Wordle::analyserMot()
         return;
     }
 
-    // Mise des états 2 à 0 dans le vecteur analyseMot
+    // Initialise le vecteur analyseMot
     for(size_t i = 0; i < motADeviner.size(); ++i)
     {
         analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
     }
-    // Mise des états 1 à 0 dans le vecteur analyseMot
-    for(size_t i = 0; i < motADeviner.size(); ++i)
-    {
-        if(analyseMot[i] == EtatAnalyse::BIEN_PLACE_VERT)
-        {
-            analyseMot[i] = EtatAnalyse::ABSENTE_ROUGE;
-        }
-    }
+
     // Recherche des lettres présentes dans le mot au bon endroit (BIEN_PLACE)
     for(size_t i = 0; i < motADeviner.size(); ++i)
     {
@@ -163,7 +143,6 @@ void Wordle::analyserMot()
 
     // Recherche des lettres présentes dans le mot mais au mauvais endroit
     // (MAL_PLACE)
-
     for(size_t i = 0; i < motEntre.size(); ++i)
     {
         if(analyseMot[i] == EtatAnalyse::ABSENTE_ROUGE)
@@ -183,11 +162,6 @@ void Wordle::analyserMot()
 const std::string& Wordle::getMotADeviner() const
 {
     return motADeviner;
-}
-
-const std::string& Wordle::getMotEntre() const
-{
-    return motEntre;
 }
 
 bool Wordle::setMotEntre(const std::string& motSaisi)
@@ -210,11 +184,6 @@ bool Wordle::setMotEntre(const std::string& motSaisi)
 bool Wordle::estMotCorrect() const
 {
     return motEntre == motADeviner;
-}
-
-bool Wordle::estLettreCorrecte(char lettre, int position) const
-{
-    return motADeviner[position] == lettre;
 }
 
 std::string Wordle::mettreLettreEnCouleurSelonEtat() const
@@ -246,24 +215,22 @@ std::string Wordle::mettreLettreEnCouleurSelonEtat() const
     return resultat;
 }
 
-bool Wordle::saisirChoixMenu()
+bool Wordle::gererMenu()
 {
-    int choix;
-    std::cout << "Veuillez entrer votre choix (1, 2 ou 3) : ";
-    std::cin >> choix;
+    int choix = ihmPartie->choisirMenu();
 
     switch(choix)
     {
-        case 1:
-            Wordle::demarrerPartie();
+        case IHMPartie::EntreeMenu::JOUER_PARTIE:
+            demarrerPartie();
             break;
-        case 2:
+        case IHMPartie::EntreeMenu::AFFICHER_HISTORIQUE:
             ihmPartie->afficherHistoriqueParties();
             break;
-        case 3:
+        case IHMPartie::EntreeMenu::QUITTER:
             return false;
         default:
-            std::cout << "Choix invalide. Veuillez entrer 1, 2 ou 3." << std::endl;
+            ihmPartie->afficherErreur("Choix invalide.");
             break;
     }
 
@@ -273,4 +240,9 @@ bool Wordle::saisirChoixMenu()
 std::vector<std::string> Wordle::getHistoriqueParties() const
 {
     return joueur->getMotsProposes();
+}
+
+std::string Wordle::getVersion() const
+{
+    return VERSION;
 }

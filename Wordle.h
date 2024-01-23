@@ -1,13 +1,13 @@
 #ifndef WORDLE_H
 #define WORDLE_H
 
-#include "Dictionnaire.h"
 #include <string>
 #include <vector>
 #include <set>
+#include "Dictionnaire.h"
 
 #define TAILLE_MAX_MOT 5
-#define DEBUG_WORDLE
+#define VERSION        "2.1"
 
 class Joueur;
 class IHMPartie;
@@ -32,35 +32,29 @@ class Wordle
     IHMPartie*               ihmPartie;
     Dictionnaire             dictionnaire;
     std::vector<EtatAnalyse> analyseMot;
-
-    std::set<std::string> motsDejaSaisis;
+    std::set<std::string>    motsDejaSaisis;
 
     void initialiserPartie();
-    bool estLettreCorrecte(char lettre, int position) const;
 
   public:
     Wordle();
     ~Wordle();
 
-    void               demarrerPartie();
-    void               analyserMot();
-    const std::string& getMotADeviner() const;
-    const std::string& getMotEntre() const;
-    bool               setMotEntre(const std::string& motSaisi);
-    std::string        mettreLettreEnCouleurSelonEtat() const;
-    void               afficherInformationsPartie();
-    std::string        saisirMot();
-    bool               verifierSaisieMot(const std::string& mot);
-    void               traiterMotEntre();
-    void               gererFinPartie(int tentative);
-    void               afficherMessageVictoire();
-    bool               saisirChoixMenu();
-    bool               verifierTailleMot(const std::string& mot);
-    bool               verifierMotDejaSaisi(const std::string& mot);
+    void                     demarrerPartie();
+    void                     analyserMot();
+    const std::string&       getMotADeviner() const;
+    bool                     setMotEntre(const std::string& motSaisi);
+    std::string              mettreLettreEnCouleurSelonEtat() const;
+    std::string              saisirMot();
+    bool                     verifierSaisieMot(const std::string& mot);
+    void                     traiterMotEntre();
+    void                     gererFinPartie(int tentative);
+    bool                     gererMenu();
+    bool                     verifierTailleMot(const std::string& mot);
+    bool                     verifierMotDejaSaisi(const std::string& mot);
     std::vector<std::string> getHistoriqueParties() const;
-    bool estMotCorrect() const;
-
-
+    bool                     estMotCorrect() const;
+    std::string              getVersion() const;
 };
 
 #endif

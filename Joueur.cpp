@@ -13,44 +13,17 @@ Joueur::~Joueur()
 {
 }
 
-int Joueur::getScore() const
-{
-    return scoreActuel;
-}
-
-int Joueur::incrementerScore()
-{
-    scoreActuel += INCREMENTATION_SCORE;
-    return scoreActuel;
-}
-
 int Joueur::incrementerTentatives()
 {
     nbTentatives += INCREMENTATION_TENTATIVES;
     return nbTentatives;
 }
 
-int Joueur::getTentativesRestantes() const
-{
-    if(nbTentatives < NB_TENTATIVES_MAX)
-    {
-        return NB_TENTATIVES_MAX - nbTentatives;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-int Joueur::getTentativesMax() const
-{
-    return NB_TENTATIVES_MAX;
-}
-
-int Joueur::getNombreTentatives() const
+int Joueur::getNbTentatives() const
 {
     return nbTentatives;
 }
+
 void Joueur::reinitialiserJeu()
 {
     scoreActuel  = 0;
@@ -69,7 +42,7 @@ void Joueur::proposerMot(const std::string& motPropose)
 #endif
 }
 
-const std::vector<std::string>& Joueur::getMotsProposes() const 
+std::vector<std::string> Joueur::getMotsProposes() const
 {
     return motsProposes;
 }

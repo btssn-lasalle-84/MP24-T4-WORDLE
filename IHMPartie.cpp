@@ -1,75 +1,56 @@
 #include "IHMPartie.h"
 #include "Wordle.h"
-#include "Dictionnaire.h"
+#include "Joueur.h"
 #include <iostream>
-#include <algorithm>
 #include <limits>
+
 using namespace std;
 
 IHMPartie::IHMPartie(Wordle* wordle) : jeuWordle(wordle)
 {
 }
 
-std::string IHMPartie::choisirTheme(std::vector<std::string> listeThemes) const
+int IHMPartie::choisirMenu() const
 {
-    if(listeThemes.empty())
+    int choix;
+    std::cout << "Veuillez entrer votre choix : ";
+    std::cin >> choix;
+
+    while(choix < 1 || choix > EntreeMenu::QUITTER)
     {
-        return "";
+        std::cout << "Saisie invalide !" << std::endl;
+        std::cout << "Veuillez entrer votre choix : ";
+        std::cin >> choix;
+    }
+    return choix;
+}
+
+int IHMPartie::choisirTheme(const std::vector<std::string>& nomsThemes) const
+{
+    if(nomsThemes.empty())
+    {
+        return -1;
     }
 
-std::cout << "Choisissez le thème :" << std::endl;
+    std::cout << "Liste des thèmes :" << std::endl;
 
-    std::vector<std::string> nomsThemes = dictionnaire.getNomsThemes();
-    for (size_t i = 0; i < nomsThemes.size(); ++i)
+    for(size_t i = 0; i < nomsThemes.size(); ++i)
     {
         std::cout << i + 1 << " - " << nomsThemes[i] << std::endl;
     }
 
     int choixTheme;
+    std::cout << "Veuillez entrer votre choix : ";
     std::cin >> choixTheme;
 
-    while (choixTheme < 1 || choixTheme > static_cast<int>(listeThemes.size()))
+    while(choixTheme < 1 || choixTheme > static_cast<int>(nomsThemes.size()))
     {
-        std::cout << "Saisie invalide. Veuillez choisir un thème valide." << std::endl;
+        std::cout << "Saisie invalide !" << std::endl;
+        std::cout << "Veuillez entrer votre choix : ";
         std::cin >> choixTheme;
     }
-    return listeThemes[choixTheme - 1];
-}
-
-void IHMPartie::afficherMotAdeviner()
-{
-    std::cout << "Mot à deviner : " << jeuWordle->getMotADeviner() << std::endl;
-}
-
-void IHMPartie::afficherLettreEnCouleurSelonEtat() const
-{
-    std::cout << "Mot entré : " << jeuWordle->mettreLettreEnCouleurSelonEtat() << std::endl;
-}
-
-void IHMPartie::afficherRegles() const
-{
-    std::cout << "Bienvenue sur Wordle !" << std::endl
-              << std::endl
-              << "Les règles du jeu sont simple :  " << std::endl
-              << std::endl
-              << " - Deviner un mot de 5 lettres en 6 tentatives maximum  " << std::endl
-              << std::endl
-              << " - La lettre s'affiche en vert si elle est à la bonne place  " << std::endl
-              << std::endl
-              << " - La lettre s'affiche en jaune si elle est présente dans le "
-                 "mot mais au mauvais "
-                 "emplacement  "
-              << std::endl
-              << std::endl
-              << " - La lettre s'affiche en rouge si elle n'est pas présente "
-                 "dans le mot  "
-              << std::endl
-              << std::endl
-              << "Bonne chance ! " << std::endl
-              << std::endl;
-}
-void IHMPartie::afficherScore() const
-{
+    std::cout << std::endl;
+    return (choixTheme - 1);
 }
 
 string IHMPartie::saisirMot()
@@ -81,9 +62,57 @@ string IHMPartie::saisirMot()
     return entree;
 }
 
+void IHMPartie::afficherLettreEnCouleurSelonEtat() const
+{
+    std::cout << "Résultat : " << jeuWordle->mettreLettreEnCouleurSelonEtat() << std::endl;
+}
+
+void IHMPartie::afficherTentatives(const std::vector<std::string>& motsProposes) const
+{
+    std::cout << "Tentative n° " << motsProposes.size();
+    if(motsProposes.size() > 1)
+    {
+        std::cout << " - Mots déjà proposés = ";
+    }
+    else
+    {
+        std::cout << " - Mot déjà proposé = ";
+    }
+    for(int i = 0; i < motsProposes.size(); ++i)
+        std::cout << motsProposes[i] << " ";
+    std::cout << std::endl << std::endl;
+}
+
+void IHMPartie::afficherInformationsPartie() const
+{
+    afficherNomWordle();
+    afficherRegles();
+}
+
+void IHMPartie::afficherRegles() const
+{
+    std::cout << "Bienvenue sur Wordle !" << std::endl
+              << std::endl
+              << "Les règles du jeu sont :  " << std::endl
+              << std::endl
+              << " - Deviner un mot de " << TAILLE_MAX_MOT << " lettres en " << NB_TENTATIVES_MAX
+              << " tentatives maximum  " << std::endl
+              << " - La lettre s'affiche en vert si elle est à la bonne place  " << std::endl
+              << " - La lettre s'affiche en jaune si elle est présente dans le "
+                 "mot mais au mauvais "
+                 "emplacement  "
+              << std::endl
+              << " - La lettre s'affiche en rouge si elle n'est pas présente "
+                 "dans le mot  "
+              << std::endl
+              << std::endl
+              << "Bonne chance ! " << std::endl
+              << std::endl;
+}
+
 void IHMPartie::afficherNomWordle() const
 {
-  cout << R"(
+    std::cout << R"(
 
   █████   ███   █████    ███████    ███████████   ██████████   █████       ██████████
  ░░███   ░███  ░░███   ███░░░░░███ ░░███░░░░░███ ░░███░░░░███ ░░███       ░░███░░░░░█
@@ -94,8 +123,8 @@ void IHMPartie::afficherNomWordle() const
      ░░███ ░░███      ░░░███████░   █████   █████ ██████████   ███████████ ██████████
       ░░░   ░░░         ░░░░░░░    ░░░░░   ░░░░░ ░░░░░░░░░░   ░░░░░░░░░░░ ░░░░░░░░░░
 
-Version 2.0
-)" << endl;
+)" << std::endl;
+    std::cout << jeuWordle->getVersion() << std::endl << std::endl;
 }
 
 bool IHMPartie::afficherMenuFin() const
@@ -108,10 +137,18 @@ bool IHMPartie::afficherMenuFin() const
     return true;
 }
 
-void IHMPartie::nbTentativesAtteint() const
+void IHMPartie::afficherMessageDefaite() const
 {
     std::cout << "Perdu ! Vous n'avez pas trouvé le mot."
-              << " Le mot à trouver était : " << jeuWordle->getMotADeviner() << std::endl;
+              << " Le mot à deviner était : " << jeuWordle->getMotADeviner() << std::endl
+              << std::endl;
+}
+
+void IHMPartie::afficherMessageVictoire(int nbTentatives) const
+{
+    std::cout << "Félicitations ! Vous avez deviné le mot en " << nbTentatives << " tentatives."
+              << std::endl
+              << std::endl;
 }
 
 void IHMPartie::afficherHistoriqueParties() const
@@ -139,5 +176,10 @@ void IHMPartie::afficherHistoriqueParties() const
     std::cout << std::endl;
 
     afficherMenuFin();
-    jeuWordle->saisirChoixMenu();
+    jeuWordle->gererMenu();
+}
+
+void IHMPartie::afficherErreur(const std::string& erreur)
+{
+    std::cerr << "Erreur : " << erreur << std::endl;
 }
