@@ -1,4 +1,5 @@
 #include "Dictionnaire.h"
+#include "IHMPartie.h"
 #include <algorithm> // find
 #include <fstream>
 #include <iostream>
@@ -31,8 +32,8 @@ void Dictionnaire::chargerMots(int numeroThemeChoisi)
 
     if(!fichier.is_open())
     {
-        std::cerr << "Erreur : Impossible d'ouvrir le fichier " << listeThemes[numeroThemeChoisi]
-                  << std::endl;
+        IHMPartie::afficherErreur("Impossible d'ouvrir le fichier " +
+                                  listeThemes[numeroThemeChoisi]);
         return;
     }
 
@@ -47,40 +48,6 @@ void Dictionnaire::chargerMots(int numeroThemeChoisi)
     }
 
     fichier.close();
-}
-
-std::vector<std::string> Dictionnaire::getListeMots() const
-{
-    return listeMots;
-}
-
-std::vector<std::string> Dictionnaire::getListeThemes() const
-{
-    return listeThemes;
-}
-
-void Dictionnaire::chargerThemes()
-{
-    listeThemes.clear();
-
-    const std::string cheminDossierThemes = CHEMIN_THEMES;
-    DIR*              repertoire          = opendir(cheminDossierThemes.c_str());
-    if(repertoire == nullptr)
-    {
-        std::cerr << "Erreur : Impossible d'ouvrir le répertoire themes" << std::endl;
-        return;
-    }
-    struct dirent* entry;
-    while((entry = readdir(repertoire)) != nullptr)
-    {
-        std::string nomFichier = entry->d_name;
-        if(nomFichier.size() > (int)strlen(EXTENSION_THEMES) &&
-           nomFichier.substr(nomFichier.size() - (int)strlen(EXTENSION_THEMES)) == EXTENSION_THEMES)
-        {
-            listeThemes.push_back(cheminDossierThemes + nomFichier);
-        }
-    }
-    closedir(repertoire);
 }
 
 std::vector<std::string> Dictionnaire::getNomsThemes() const
@@ -99,4 +66,28 @@ std::vector<std::string> Dictionnaire::getNomsThemes() const
         }
     }
     return nomsThemes;
+}
+
+void Dictionnaire::chargerThemes()
+{
+    listeThemes.clear();
+
+    const std::string cheminDossierThemes = CHEMIN_THEMES;
+    DIR*              repertoire          = opendir(cheminDossierThemes.c_str());
+    if(repertoire == nullptr)
+    {
+        IHMPartie::afficherErreur("Impossible d'ouvrir le répertoire " + string(CHEMIN_THEMES));
+        return;
+    }
+    struct dirent* entry;
+    while((entry = readdir(repertoire)) != nullptr)
+    {
+        std::string nomFichier = entry->d_name;
+        if(nomFichier.size() > (int)strlen(EXTENSION_THEMES) &&
+           nomFichier.substr(nomFichier.size() - (int)strlen(EXTENSION_THEMES)) == EXTENSION_THEMES)
+        {
+            listeThemes.push_back(cheminDossierThemes + nomFichier);
+        }
+    }
+    closedir(repertoire);
 }
